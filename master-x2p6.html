@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EXRISE PROJECT | SNS運用 お見積りシミュレーター</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#14141A; --panel:#1D1D26; --panel2:#23232E; --line:#33333F;
+  --text:#EDEDF0; --muted:#8B8B96; --amber:#E8622D; --amber-soft:#F2A177;
+  --gold:#C9A961; --ok:#7BC49A;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;line-height:1.6;padding-bottom:120px}
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px}
+header{padding:26px 0 10px;border-bottom:1px solid var(--line);margin-bottom:20px}
+.brand{font-size:11px;letter-spacing:.35em;color:var(--gold)}
+h1{font-family:'Shippori Mincho',serif;font-size:24px;font-weight:700;margin-top:6px;line-height:1.4}
+h1 em{font-style:normal;color:var(--amber)}
+.lede{color:var(--muted);font-size:12.5px;margin-top:6px}
+h2{font-size:13px;letter-spacing:.18em;color:var(--muted);margin:26px 0 10px;font-weight:700}
+.secnote{font-size:11px;color:var(--muted);margin:-6px 0 10px}
+/* industry cards */
+.inds{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:600px){.inds{grid-template-columns:repeat(4,1fr)}}
+.ind{background:var(--panel);border:1.5px solid var(--line);border-radius:12px;padding:13px 12px;cursor:pointer;transition:border-color .2s, transform .15s;position:relative;text-align:center}
+.ind:active{transform:scale(.98)}
+.ind .iname{font-family:'Shippori Mincho',serif;font-size:15px;letter-spacing:.08em}
+.ind .idesc{font-size:10.5px;color:#C9CAD3;margin-top:3px;line-height:1.5}
+.ind.active{border-color:var(--gold);background:linear-gradient(180deg,#26232000,#2A251533),var(--panel)}
+.ind.active::after{content:"選択中";position:absolute;top:-9px;right:10px;background:var(--gold);color:#14141A;font-size:10px;padding:2px 8px;border-radius:99px;font-weight:700}
+/* plan cards */
+.plans{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:600px){.plans{grid-template-columns:repeat(4,1fr)}}
+.plan{background:var(--panel);border:1.5px solid var(--line);border-radius:12px;padding:14px 12px;cursor:pointer;transition:border-color .2s, transform .15s;position:relative}
+.plan:active{transform:scale(.98)}
+.plan .pname{font-size:12px;letter-spacing:.2em;color:#B9B9C2;font-weight:700}
+.plan .pprice{font-family:'Shippori Mincho',serif;font-size:21px;margin-top:4px}
+.plan .pprice span{font-size:11px;color:var(--muted);font-family:'Zen Kaku Gothic New'}
+.plan .pdesc{font-size:11px;color:#C9CAD3;margin-top:6px;line-height:1.55}
+.plan.active{border-color:var(--amber);background:linear-gradient(180deg,#26202000,#2A1D1533),var(--panel)}
+.plan.active::after{content:"選択中";position:absolute;top:-9px;right:10px;background:var(--amber);color:#fff;font-size:10px;padding:2px 8px;border-radius:99px;font-weight:700}
+/* discount banner */
+.disc{display:none;background:linear-gradient(90deg,#2A1D15,#1D1D26);border:1px solid var(--amber);border-radius:10px;padding:12px 14px;margin-top:14px;font-size:13px}
+.disc.show{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.disc b{color:var(--amber-soft);font-size:15px;white-space:nowrap}
+/* option rows */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.ogroup{padding:9px 14px;background:var(--panel2);font-size:11px;letter-spacing:.15em;color:var(--gold);font-weight:700;border-bottom:1px solid var(--line)}
+.opt{display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid var(--line)}
+.opt:last-child{border-bottom:none}
+.opt .info{flex:1;min-width:0}
+.opt .name{font-weight:500;font-size:14px}
+.opt .desc{font-size:11px;color:var(--muted);margin-top:2px}
+.opt .price{font-size:13px;color:var(--amber-soft);white-space:nowrap;min-width:74px;text-align:right}
+/* toggle */
+.tgl{width:46px;height:26px;border-radius:99px;background:var(--panel2);border:1px solid var(--line);position:relative;cursor:pointer;flex-shrink:0;transition:background .2s}
+.tgl::after{content:"";position:absolute;top:2.5px;left:3px;width:19px;height:19px;border-radius:50%;background:var(--muted);transition:all .2s}
+.tgl.on{background:var(--amber);border-color:var(--amber)}
+.tgl.on::after{left:23px;background:#fff}
+.tgl.lock{background:var(--gold);border-color:var(--gold);cursor:default;opacity:.95}
+.tgl.lock::after{left:23px;background:#fff;content:""}
+.badge-inc{font-size:10px;background:var(--gold);color:#14141A;font-weight:700;border-radius:4px;padding:1px 6px;margin-left:6px;vertical-align:1px}
+.opt.included .name{color:var(--gold)}
+.opt.selected-extra{background:#2A1D1522}
+/* segmented */
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.seg button{background:var(--panel2);border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:6px 11px;font-size:12px;font-family:inherit;cursor:pointer;transition:all .15s}
+.seg button.sel{background:var(--amber);border-color:var(--amber);color:#fff;font-weight:700}
+.seg button.inc{background:var(--gold);border-color:var(--gold);color:#14141A;font-weight:700}
+.seg button:disabled{opacity:.3;cursor:not-allowed}
+.seg button .up{font-size:10px;display:block;opacity:.85}
+.segrow{padding:13px 14px;border-bottom:1px solid var(--line)}
+.segrow:last-child{border-bottom:none}
+.segrow .name{font-weight:500;font-size:14px}
+.segrow .desc{font-size:11px;color:var(--muted)}
+/* quote view */
+.qrow{display:flex;justify-content:space-between;gap:12px;padding:12px 14px;border-bottom:1px solid var(--line);font-size:13.5px}
+.qrow:last-child{border-bottom:none}
+.qrow .ql{min-width:0}
+.qrow .qv{white-space:nowrap;color:var(--amber-soft)}
+.qrow.sum{background:var(--panel2);font-weight:700}
+.qrow.sum .qv{color:var(--amber);font-family:'Shippori Mincho',serif;font-size:17px}
+.qrow.strike .qv{color:var(--muted);text-decoration:line-through}
+.dinput{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.dinput label{font-size:13px;font-weight:500}
+.dinput input{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:8px;padding:9px 12px;font-size:16px;width:140px;font-family:inherit;text-align:right}
+.dinput input:focus{outline:none;border-color:var(--amber)}
+.dinput .unit{font-size:12px;color:var(--muted)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;padding:2px 14px 13px;border-bottom:1px solid var(--line)}
+.chips button{background:var(--panel2);border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:6px 11px;font-size:12px;font-family:inherit;cursor:pointer;transition:all .15s}
+.chips button.sel{background:var(--amber);border-color:var(--amber);color:#fff;font-weight:700}
+.grand{background:linear-gradient(90deg,#2A1D15,#1D1D26);border:1px solid var(--amber);border-radius:12px;padding:16px;margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.grand .gl{font-size:11.5px;color:var(--muted);letter-spacing:.12em}
+.grand .gs{font-size:10.5px;color:var(--muted);margin-top:2px}
+.grand .gv{font-family:'Shippori Mincho',serif;font-size:27px;color:var(--amber);white-space:nowrap}
+.grand .gv span{font-size:13px;color:var(--muted);font-family:'Zen Kaku Gothic New'}
+/* footer */
+.foot{position:fixed;bottom:0;left:0;right:0;background:#101016F2;backdrop-filter:blur(8px);border-top:1px solid var(--line);z-index:50}
+.footin{max-width:760px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:14px}
+.total{flex:1}
+.total .tl{font-size:11px;color:#C9CAD3;letter-spacing:.15em;font-weight:500}
+.total .tv{font-family:'Shippori Mincho',serif;font-size:29px;color:var(--amber);line-height:1.15}
+.total .tv span{font-size:13px;color:#C9CAD3;font-family:'Zen Kaku Gothic New'}
+.total .init{font-size:12px;color:#D9D9E0;margin-top:1px}
+.total .init b{color:var(--amber-soft);font-weight:700}
+.nextbtn{background:var(--amber);color:#fff;border:none;border-radius:10px;padding:13px 20px;font-size:13.5px;font-weight:700;font-family:inherit;letter-spacing:.08em;cursor:pointer;flex-shrink:0;transition:transform .15s}
+.nextbtn:active{transform:scale(.97)}
+.nextbtn.ghost{background:none;border:1px solid var(--line);color:var(--muted)}
+.note{font-size:10.5px;color:var(--muted);margin-top:22px;line-height:1.8}
+.note b{color:#B9B9C2}
+/* recommend badge */
+.recbadge{display:inline-block;font-size:9px;font-weight:700;color:#3A2000;background:linear-gradient(180deg,#FFD766,#E8A02D);border-radius:99px;padding:1px 7px;margin-left:6px;vertical-align:2px;letter-spacing:.05em;box-shadow:0 0 6px #E8A02D55;white-space:nowrap}
+.recbadge-card{position:absolute;top:-9px;left:10px;background:linear-gradient(180deg,#FFD766,#E8A02D);color:#3A2000;font-size:10px;padding:2px 8px;border-radius:99px;font-weight:700;box-shadow:0 0 8px #E8A02D66}
+.seg button{position:relative}
+.fxbadge{display:inline-block;font-size:9px;font-weight:700;color:#06281A;background:linear-gradient(180deg,#9FE0BC,#5FAE85);border-radius:99px;padding:1px 7px;margin-left:6px;vertical-align:2px;white-space:nowrap;box-shadow:0 0 6px #5FAE8555}
+.seg button.rec::after{content:"オススメ";position:absolute;top:-9px;right:-4px;background:linear-gradient(180deg,#FFD766,#E8A02D);color:#3A2000;font-size:8.5px;font-weight:700;padding:0 6px;border-radius:99px;box-shadow:0 0 5px #E8A02D77}
+/* formal quote sheet */
+.sheet{background:#fff;color:#16161C;border-radius:10px;padding:34px 30px;font-size:12.5px;line-height:1.7}
+.sheet h3{font-family:'Shippori Mincho',serif;font-size:22px;letter-spacing:.3em;text-align:center;margin-bottom:18px}
+.sh-meta{display:flex;justify-content:space-between;font-size:11px;color:#555;margin-bottom:14px}
+.sh-to{font-size:15px;border-bottom:2px solid #16161C;padding:4px 2px;margin-bottom:4px;display:flex;align-items:baseline;gap:6px}
+.sh-to input{border:none;outline:none;font-family:inherit;font-size:15px;flex:1;background:#F5F2EB;padding:4px 8px;border-radius:4px;color:#16161C}
+.sh-note{font-size:10.5px;color:#666}
+.sh-title{margin:14px 0 2px;font-weight:700}
+table.sh{width:100%;border-collapse:collapse;margin-top:10px}
+table.sh th{background:#16161C;color:#fff;font-size:11px;padding:7px 10px;text-align:left;font-weight:500}
+table.sh th:last-child,table.sh td:last-child{text-align:right;white-space:nowrap}
+table.sh td{border-bottom:1px solid #ddd;padding:7px 10px;font-size:12px}
+table.sh td.cat{color:#888;font-size:10.5px;white-space:nowrap}
+tr.shsum td{font-weight:700;background:#F5F2EB}
+tr.shgrand td{font-weight:700;background:#16161C;color:#fff;font-size:13.5px}
+.sh-remarks{margin-top:16px;font-size:10.5px;color:#555;line-height:1.8;border:1px solid #ddd;border-radius:6px;padding:10px 12px}
+.sh-issuer{margin-top:16px;text-align:right;font-size:12px}
+.sh-issuer b{font-size:14px;letter-spacing:.12em}
+@media print{
+  body{background:#fff !important;padding:0}
+  .foot{display:none !important}
+  #view-formal{display:block !important}
+  #view-formal .sheet{border-radius:0;padding:4mm 2mm}
+}
+</style>
+</head>
+<body>
+<div class="wrap" id="view-config">
+<header>
+  <div class="brand">EXRISE PROJECT</div>
+  <h1><em>SNS運用</em> お見積り</h1>
+  <div class="lede">業種を選ぶと、その業種のプラン・単価・オプションが表示されます。</div>
+</header>
+<h2>1. 業種を選ぶ</h2>
+<div class="inds" id="inds"></div>
+<h2>2. プランを選ぶ</h2>
+<div class="plans" id="plans"></div>
+<div class="disc" id="disc"><span>単品で組んだ場合との差額(セット割引)</span><b id="discv"></b></div>
+<h2>3. 投稿・制作(グレード選択)</h2>
+<div class="card" id="segs"></div>
+<h2>4. 月額オプション(タップで追加)</h2>
+<div class="secnote">「★ オススメ」=推奨構成(STANDARD相当)/「フォロワー増◎」=フォロワー獲得の費用対効果が高い項目</div>
+<div class="card" id="opts"></div>
+<div class="note" id="note"></div>
+</div>
+
+<div class="wrap" id="view-quote" style="display:none">
+<header>
+  <div class="brand">EXRISE PROJECT</div>
+  <h1>お見積り内容の<em>ご確認</em></h1>
+  <div class="lede">構成を変更する場合は、下の「構成に戻る」からお戻りください。</div>
+</header>
+<h2>月額のご料金</h2>
+<div class="card" id="qmonthly"></div>
+<h2>単発オプション(買い切り・初月のみ)</h2>
+<div class="secnote">ご一緒にいかがですか。チェック=1件分(複数件は件数分を加算)。ご請求は初月のみで、月額には含まれません。</div>
+<div class="card" id="sopts"></div>
+<h2>初期費用(初月のみ)</h2>
+<div class="card">
+  <div class="qrow" id="qinitbase"><span class="ql">初期費用(定価)</span><span class="qv">¥150,000</span></div>
+  <div class="dinput"><label for="discin">割引額</label><input id="discin" type="number" inputmode="numeric" min="0" max="150000" step="1000" value="0" oninput="setDisc(this.value,false)"><span class="unit">円引き(0〜150,000)</span></div>
+  <div class="chips" id="chips"></div>
+  <div class="qrow" id="qdiscrow" style="display:none"><span class="ql">お値引き</span><span class="qv" id="qdiscv"></span></div>
+  <div class="qrow sum"><span class="ql">お支払い初期費用</span><span class="qv" id="qinitv">¥150,000</span></div>
+</div>
+<div class="grand">
+  <div><div class="gl">初月お支払い合計(税別)</div><div class="gs">翌月以降は月額のみのお支払いです</div></div>
+  <div class="gv"><span>¥</span><span id="qgrand"></span></div>
+</div>
+<div class="note">
+お値引きの適用は初期費用のみです。月額料金・単発オプションは定価でのご案内となります。<br>
+表示価格はすべて税別です。本シミュレーションは概算であり、正式なお見積りはご契約前に書面でご提示します。
+</div>
+</div>
+
+<div class="wrap" id="view-formal" style="display:none">
+<div class="sheet">
+<h3>御 見 積 書</h3>
+<div class="sh-meta"><span>見積番号:<span id="fno"></span></span><span>発行日:<span id="fdate"></span></span></div>
+<div class="sh-to"><input id="fto" placeholder="お客様名をご入力ください" oninput="ftoName=this.value"><span>御中</span></div>
+<div class="sh-note">下記のとおりお見積り申し上げます。本見積書の有効期限は発行日より30日です。</div>
+<div class="sh-title" id="fsubject"></div>
+<table class="sh" id="ftable"></table>
+<div class="sh-remarks" id="fremarks"></div>
+<div class="sh-issuer">発行元<br><b>EXRISE PROJECT</b></div>
+</div>
+</div>
+
+<div class="foot"><div class="footin">
+  <div class="total">
+    <div class="tl">月額合計(税別)</div>
+    <div class="tv"><span>¥</span><span id="total">39,800</span></div>
+    <div class="init" id="init">初期費用 ¥150,000(初月のみ)</div>
+  </div>
+  <button class="nextbtn ghost" id="backbtn" onclick="goBack()" style="display:none">戻る</button>
+  <button class="nextbtn" id="navbtn" onclick="goNext()">次へ</button>
+</div></div>
+<script>
+// ===== 共通定義 =====
+const INIT_PRICE=150000; // 初期費用 定価(全業種・全プラン共通)
+const DISC_CHIPS=[{l:"割引なし",v:0},{l:"−30,000",v:30000},{l:"−50,000",v:50000},{l:"−100,000",v:100000},{l:"全額無料",v:150000}];
+const INDUSTRIES={
+  bar:{tab:"BAR",sub:"バー/シーシャ/ラウンジ"},
+  idol:{tab:"Production",sub:"メンズアイドル/エンタメ"},
+  estate:{tab:"RealEstate",sub:"不動産会社"},
+  acct:{tab:"Accounting",sub:"経理代行会社"},
+};
+const NOTE_COMMON=`<b>ご契約条件</b>:月額は前月末までの前払い/1ヶ月ごとの自動更新(縛りなし・解約は前月末まで)/全投稿は公開前に貴社確認を経ます。単発オプションは初月のみのご請求です。<br><b>含まれないもの</b>:運用チームの撮影同行(プロ撮影は単発オプションとして提携カメラマンチームが担当・日程別途調整)/深夜・即時対応(受付・対応は日中〜20時)/DM・コメントの返信代行(定型・上限つきオプションを除く)/広告運用・インフルエンサー起用(別途お見積り:広告は預かり予算の20%を運用手数料、80%を配信費に充当)。<br><b>成果について</b>:フォロワー数・来店数・成約数・応募数等の成果を保証するものではありません。保証するのは、発信が止まらないことと、数字を毎月見て改善することです。<br>`;
+// 共通月額オプション(新規追加分)
+const M_EN={g:"投稿・制作",name:"英語併記投稿",desc:"既存投稿の英語ローカライズ",p:30000};
+const M_ML={g:"投稿・制作",name:"多言語対応(1言語)",desc:"韓国語・中国語・タイ語等の翻訳・表現調整",p:40000};
+const M_TT8={g:"他媒体展開",name:"TikTokネイティブ運用 月8本",desc:"TikTok向けの企画・編集・投稿",p:80000};
+const M_TT12={g:"他媒体展開",name:"TikTokネイティブ運用 月12本",desc:"投稿頻度を重視した運用",p:120000};
+const M_SHT={g:"他媒体展開",name:"YouTube Shorts転載 月8本",desc:"リール素材の転載展開",p:25000,fx:1};
+const M_SHN={g:"他媒体展開",name:"YouTube Shortsネイティブ運用",desc:"Shorts向け構成・タイトル最適化 月8本",p:80000};
+const M_VOOM={g:"他媒体展開",name:"LINE VOOM投稿 月8本",desc:"既存素材の転用展開",p:30000};
+const M_ASSET={g:"撮影サポート",name:"素材整理・クラウド保管",desc:"店舗別の素材ライブラリ作成・管理",p:15000};
+const M_UGC={g:"口コミ・UGC",name:"UGC掲載許諾管理",desc:"お客様投稿の許可取得・履歴管理",p:30000};
+const M_REPOST={g:"口コミ・UGC",name:"口コミ・メンション再投稿",desc:"許諾確認込みのリポスト運用",p:25000,fx:1};
+const M_LMSG={g:"LINE・CRM",name:"LINE月次配信",desc:"月4回の配信企画・制作",p:30000};
+const M_LSEG={g:"LINE・CRM",name:"属性別セグメント配信",desc:"新規・常連等で配信を分離",p:50000};
+const M_LBD={g:"LINE・CRM",name:"誕生日・記念日配信",desc:"自動配信の設計・運用",p:30000};
+const M_DMX={g:"LINE・CRM",name:"DM・コメント対応拡張",desc:"定型返信・日中のみ・月100件まで(超過は従量)",p:50000};
+const M_RREP={g:"採用",name:"採用数値レポート",desc:"閲覧・クリック・問い合わせの月次報告(応募数は観測のみ)",p:20000};
+const M_WREP={g:"分析・改善",name:"週次簡易レポート",desc:"主要数値・投稿評価を毎週共有",p:20000};
+const M_DASH={g:"分析・改善",name:"KPIダッシュボード運用",desc:"複数媒体の数値を集約(初期設定50,000円は単発側)",p:20000};
+const M_MULTI={g:"分析・改善",name:"多店舗一括管理(1店舗あたり)",desc:"承認・レポートの集約管理",p:30000};
+// 共通単発オプション
+const S_TT={g:"初期構築・ツール",name:"TikTokアカウント初期構築",desc:"プロフィール・導線・投稿方針設定",p:50000};
+const S_YT={g:"初期構築・ツール",name:"YouTubeチャンネル初期構築",desc:"チャンネル・概要欄・再生リスト設計",p:50000};
+const S_LINEF={g:"初期構築・ツール",name:"LINE公式アカウント フル構築",desc:"初期設定・導線設計一式(簡易版は月額側のLINE導線)",p:100000};
+const S_RICH={g:"初期構築・ツール",name:"リッチメニュー制作",desc:"予約・地図・メニューの固定導線",p:50000};
+const S_AUTO={g:"初期構築・ツール",name:"問い合わせ自動返信設定",desc:"営業時間・料金・場所の自動応答",p:30000};
+const S_DASHI={g:"初期構築・ツール",name:"KPIダッシュボード初期設定",desc:"月額運用(20,000円/月)とセット",p:50000};
+const S_FEED={g:"制作・動画(単発)",name:"フィード投稿追加(1本)",desc:"画像制作・文章・投稿",p:6000};
+const S_CAR={g:"制作・動画(単発)",name:"カルーセル投稿(1本)",desc:"5〜8枚の解説型投稿",p:10000};
+const S_ST={g:"制作・動画(単発)",name:"ストーリーズ追加(1本)",desc:"画像または短尺動画",p:3000};
+const S_SHORT={g:"制作・動画(単発)",name:"15秒短縮版制作(1本)",desc:"Shorts・広告用の再編集",p:5000};
+const S_TELOP={g:"制作・動画(単発)",name:"テロップ追加(1本)",desc:"全編字幕",p:5000};
+const S_SUB={g:"制作・動画(単発)",name:"多言語字幕(1本・1言語)",desc:"英語・韓国語等",p:8000};
+const S_NARR={g:"制作・動画(単発)",name:"ナレーション追加(1本)",desc:"AI音声基本(ナレーター手配は実費別)",p:15000};
+const S_TREND={g:"制作・動画(単発)",name:"トレンド音源対応(1本)",desc:"流行フォーマットへ再構成 ※音源権利確認込み",p:15000};
+const S_CUT={g:"制作・動画(単発)",name:"長尺動画から切り抜き(1本)",desc:"Shorts・TikTok化",p:12000,fx:1};
+const S_SAME={g:"制作・動画(単発)",name:"当日編集・当日投稿(1本)",desc:"※日中受付・20時までの投稿に限る(事前予約制)",p:30000};
+const S_LONG={g:"制作・動画(単発)",name:"YouTube長尺動画(1本)",desc:"3〜10分。素材は貴社支給・編集のみ",p:120000};
+const S_MTG60={g:"分析・研修(単発)",name:"戦略ミーティング60分(1回)",desc:"オンライン実施。月次MTG(30分)の拡張版",p:30000};
+const S_ENJO={g:"分析・研修(単発)",name:"炎上・クレーム対応方針作成",desc:"対応フロー・返信例(対応実行は貴社側)",p:50000};
+const S_RECOV={g:"分析・研修(単発)",name:"アカウント復旧支援",desc:"※復旧保証なし・着手金型",p:50000};
+const S_BRAND={g:"分析・研修(単発)",name:"ブランド・投稿ガイドライン策定",desc:"多店舗・チーム展開向け一式",p:150000};
+const S_TRAIN={g:"分析・研修(単発)",name:"スタッフSNS研修(2時間)",desc:"※オンライン開催・撮影投稿研修",p:100000};
+const S_RINT={g:"採用(単発)",name:"スタッフインタビュー動画(1本)",desc:"撮影は貴社またはプロ撮影オプション/編集・構成は当方 ※掲載同意",p:30000};
+const S_RDAY={g:"採用(単発)",name:"仕事の一日動画(1本)",desc:"業務・雰囲気紹介。撮影は貴社またはプロ撮影オプション ※掲載同意",p:40000};
+const S_RLP={g:"採用(単発)",name:"採用専用LP制作",desc:"※貴社の直接募集の制作支援に限定(応募取次なし)",p:150000};
+const S_RLINE={g:"採用(単発)",name:"応募受付LINE構築",desc:"※応募窓口は貴社名義",p:80000};
+const S_RFAQ={g:"採用(単発)",name:"採用FAQ制作",desc:"勤務条件・服装・シフト等の整理",p:30000};
+// プロ撮影(提携カメラマンチームが担当・日程別途調整)
+const S_PH_SMA={g:"プロ撮影(単発)",name:"スマホ撮影同行(2時間)",desc:"プロによる簡易撮影+撮り方指導込み",p:50000};
+const S_PH_PRO={g:"プロ撮影(単発)",name:"プロカメラマン写真撮影",desc:"店内・商品・人物 ※規模により増額",p:100000};
+const S_PH_VER={g:"プロ撮影(単発)",name:"縦型動画撮影",desc:"リール用素材10本程度 ※規模により増額",p:80000,fx:1};
+const S_PH_NIGHT={g:"プロ撮影(単発)",name:"深夜帯 雰囲気撮影",desc:"実際の営業風景をプロが撮影 ※規模により増額",p:70000};
+const S_PH_FOOD={g:"プロ撮影(単発)",name:"ドリンク・フード撮影",desc:"商品単体のブツ撮り",p:60000};
+const S_PH_STAFF={g:"プロ撮影(単発)",name:"スタッフプロフィール撮影",desc:"採用・紹介用の人物撮影",p:60000};
+const S_PH_EVENT={g:"プロ撮影(単発)",name:"イベント撮影(写真・動画)",desc:"※規模により増額",p:120000};
+// ===== 業種別データ(セットは各企画書、単価ラダーはセット価格から逆算設計) =====
+const IND_DATA={
+  bar:{
+    baseLabel:"BASEプラン(月4投稿+LINE受付+数値報告)",
+    segs:{
+      feed:{name:"フィード投稿", desc:"ベースの月4投稿に追加", levels:[
+        {l:"月4(ベース)",p:0},{l:"月6",p:10000},{l:"月8",p:20000},{l:"月12",p:36000},{l:"月16",p:52000}]},
+      st:{name:"ストーリーズ運用", desc:"営業情報・おすすめ・裏側の発信", levels:[
+        {l:"なし",p:0},{l:"週3回",p:15000},{l:"毎日",p:30000}]},
+      reel:{name:"リール制作", desc:"店舗体験主体の縦動画", levels:[
+        {l:"なし",p:0},{l:"月2本",p:20000},{l:"月4本",p:36000}]},
+    },
+    opts:{
+      tmpl:{g:"投稿・制作",name:"「本日営業中」テンプレ 月1セット",desc:"選んでタップするだけの日替わり画像 約30枚",p:10000},
+      weekly:{g:"投稿・制作",name:"週間営業予定投稿",desc:"営業日・イベント・休業情報を毎週整理",p:20000},
+      menu:{g:"投稿・制作",name:"メニュー紹介シリーズ 月4本",desc:"看板メニュー・季節メニューの訴求",p:30000},
+      staffi:{g:"投稿・制作",name:"スタッフ紹介シリーズ 月4本",desc:"※掲載同意は店舗確認",p:30000},
+      en:M_EN, ml:M_ML,
+      fb:{g:"他媒体展開",name:"Facebook同時配信",desc:"Instagram投稿の同時展開",p:5000},
+      th:{g:"他媒体展開",name:"Threads展開",desc:"投稿シェア+ひとこと運用",p:5000},
+      tt8:M_TT8, sht:M_SHT, shn:M_SHN, voom:M_VOOM,
+      order:{g:"撮影サポート",name:"撮影オーダーの月次更新",desc:"「次に何を撮るか」を毎月具体指示",p:5000},
+      asset:M_ASSET,
+      qr:{g:"口コミ・UGC",name:"店内QRポップ デザイン月1更新",desc:"卓上・レジ用フォローポップ(印刷実費別)",p:5000,fx:1},
+      gbp:{g:"口コミ・UGC",name:"Googleビジネスプロフィール運用",desc:"投稿週1・口コミ返信文の作成・情報整備",p:29800},
+      ugc:M_UGC, repost:M_REPOST,
+      line:{g:"LINE・CRM",name:"LINE公式 導線設計・定型文(簡易)",desc:"予約・問い合わせの受け皿づくり",p:10000},
+      lmsg:M_LMSG, lseg:M_LSEG, lbd:M_LBD, dmx:M_DMX,
+      recruit:{g:"採用",name:"求人告知投稿 月2本",desc:"ガイドライン準拠・店舗名義の直接募集支援",p:10000},
+      rrep:M_RREP,
+      report:{g:"分析・改善",name:"月次分析レポート(フル版)",desc:"リーチ・保存・導線の層別分析+改善提案",p:15000},
+      mtg:{g:"分析・改善",name:"月次改善ミーティング(30分)",desc:"オンライン実施。レポートをもとに翌月方針をすり合わせ",p:15000},
+      wrep:M_WREP, dash:M_DASH, multi:M_MULTI,
+    },
+    sopts:{
+      s_tt:S_TT, s_yt:S_YT,
+      s_gbp:{g:"初期構築・ツール",name:"Googleビジネスプロフィール初期改善",desc:"基本情報・カテゴリ・説明文の整備",p:50000},
+      s_trip:{g:"初期構築・ツール",name:"TripAdvisor整備",desc:"店舗情報・写真・説明文(インバウンド対策)",p:50000},
+      s_apple:{g:"初期構築・ツール",name:"Apple Business Connect整備",desc:"Appleマップの店舗情報",p:30000},
+      s_linef:S_LINEF, s_rich:S_RICH,
+      s_card:{g:"初期構築・ツール",name:"デジタル会員証",desc:"LINEショップカード設定",p:80000},
+      s_scn:{g:"初期構築・ツール",name:"再来店促進シナリオ設計",desc:"来店後フォローの設計",p:50000},
+      s_auto:S_AUTO, s_dashi:S_DASHI,
+      s_ugkit:{g:"初期構築・ツール",name:"UGC投稿依頼キット",desc:"卓上POP・依頼文・QR一式",p:20000,fx:1},
+      s_kuchi:{g:"初期構築・ツール",name:"口コミ獲得ツール制作",desc:"告知型(特典交換なし・Googleポリシー準拠)",p:20000},
+      s_feed:S_FEED, s_car:S_CAR, s_st:S_ST,
+      s_guide:{g:"制作・動画(単発)",name:"初回来店ガイド一式",desc:"料金・場所・入店方法を投稿化",p:30000},
+      s_short:S_SHORT, s_telop:S_TELOP, s_sub:S_SUB, s_narr:S_NARR, s_trend:S_TREND, s_cut:S_CUT, s_same:S_SAME, s_long:S_LONG,
+      s_voice:{g:"制作・動画(単発)",name:"お客様の声動画編集(1本)",desc:"※掲載同意は店舗確認",p:20000},
+      s_pcoach:{g:"プロ撮影(単発)",name:"オンライン撮影指導(1回)",desc:"Zoom等で撮り方レクチャー(訪問なし)",p:20000},
+      s_psma:S_PH_SMA, s_ppro:S_PH_PRO, s_pver:S_PH_VER, s_pnight:S_PH_NIGHT, s_pfood:S_PH_FOOD, s_pportrait:S_PH_STAFF, s_pevent:S_PH_EVENT,
+      s_cd:{g:"イベント(単発)",name:"イベントカウントダウン",desc:"7日前からの告知一式",p:20000},
+      s_livep:{g:"イベント(単発)",name:"Instagramライブ企画(台本・進行)",desc:"配信は店舗側で実施",p:30000},
+      s_livec:{g:"イベント(単発)",name:"ライブ切り抜き制作",desc:"3〜5本作成",p:25000},
+      s_evpk:{g:"イベント(単発)",name:"イベント告知パック",desc:"投稿・ストーリーズ・告知画像一式",p:50000},
+      s_evday:{g:"イベント(単発)",name:"イベント当日リモート実況",desc:"店舗からのLINE素材を即時加工投稿 ※現場派遣なし・20時まで",p:70000},
+      s_after:{g:"イベント(単発)",name:"イベントアフタームービー(1本)",desc:"30〜60秒。素材は貴社撮影またはプロ撮影オプション",p:60000},
+      s_evlp:{g:"イベント(単発)",name:"イベント専用LP",desc:"※規模により増額",p:100000},
+      s_lp:{g:"イベント(単発)",name:"簡易店舗LP",desc:"店舗紹介・アクセス・予約 ※名義・保守は契約で確定",p:150000},
+      s_rint:S_RINT, s_rday:S_RDAY, s_rlp:S_RLP, s_rline:S_RLINE, s_rfaq:S_RFAQ,
+      s_mtg60:S_MTG60, s_enjo:S_ENJO, s_recov:S_RECOV, s_brand:S_BRAND, s_train:S_TRAIN,
+    },
+    plans:{
+      base:{name:"BASE",p:39800,desc:"月4投稿+LINE受付+数値報告。ここに自由にトッピング",seg:{feed:0,st:0,reel:0},inc:[]},
+      entry:{name:"ENTRY",p:59800,desc:"月6投稿+営業中テンプレ+撮影オーダー",seg:{feed:1,st:0,reel:0},inc:["tmpl","order"]},
+      standard:{name:"STANDARD",p:98000,desc:"月12投稿+ST週3+リール月2+テンプレ+フルレポート+撮影オーダー",seg:{feed:3,st:1,reel:1},inc:["tmpl","report","order"]},
+      growth:{name:"GROWTH",p:158000,desc:"月16投稿+ST毎日+リール月4+改善MTG+求人告知まで全部入り",seg:{feed:4,st:2,reel:2},inc:["tmpl","report","mtg","order","recruit"]},
+    },
+    note:NOTE_COMMON+`<b>業態固有</b>:シーシャ関連はMeta広告規制(タバコ関連)の対象のため、広告ブーストは対象外です。<br>表示価格はすべて税別です。`,
+  },
+  idol:{
+    baseLabel:"BASEプラン(公式Instagram月4投稿+数値報告)",
+    segs:{
+      feed:{name:"公式フィード投稿",desc:"公式アカウントの月間投稿数",levels:[
+        {l:"月4(ベース)",p:0},{l:"月8",p:40000},{l:"月12",p:64000}]},
+      st:{name:"ストーリーズ運用",desc:"日常・オフショット・参加型で接触を切らさない",levels:[
+        {l:"なし",p:0},{l:"週3",p:30000},{l:"週5",p:40000}]},
+      reel:{name:"リール制作",desc:"パフォーマンス・表情の切り抜き縦動画",levels:[
+        {l:"なし",p:0},{l:"月2本",p:40000},{l:"月4本",p:64000}]},
+      agent:{name:"個人アカウント投稿代行",desc:"週2投稿/名",levels:[
+        {l:"なし",p:0},{l:"1名",p:29800},{l:"2名",p:59600},{l:"3名",p:89400}]},
+    },
+    opts:{
+      reel8:{g:"投稿・制作",name:"リール強化 月8本パック",desc:"高頻度の切り抜き・縦動画運用",p:130000},
+      en:M_EN, ml:M_ML,
+      tiktok:{g:"他媒体展開",name:"TikTok転載運用 月8本",desc:"切り抜き元動画は先方支給",p:49800,fx:1},
+      x:{g:"他媒体展開",name:"X運用",desc:"週5ポスト",p:29800,fx:1},
+      tt8:M_TT8, tt12:M_TT12, sht:M_SHT, shn:M_SHN, voom:M_VOOM,
+      event:{g:"ファン・動員施策",name:"イベント動員設計(月1回)",desc:"イベント日から逆算した告知シーケンス設計",p:30000},
+      psup:{g:"ファン・動員施策",name:"個人アカウント支援",desc:"ガイドライン・テンプレ・月次モニタリング(5名まで)",p:40000},
+      goods:{g:"ファン・動員施策",name:"物販導線設計",desc:"新グッズ・チェキの見せ方・配置設計",p:30000},
+      ugc:M_UGC, repost:M_REPOST,
+      order:{g:"撮影サポート",name:"撮影オーダーの月次更新",desc:"「次に何を撮るか」を毎月具体指示",p:5000},
+      asset:M_ASSET,
+      line:{g:"LINE・CRM",name:"LINE公式 導線設計・定型文(簡易)",desc:"ファンクラブ・物販・問い合わせの受け皿づくり",p:10000},
+      lmsg:M_LMSG, lseg:M_LSEG,
+      recruit:{g:"採用",name:"メンバー募集告知投稿 月2本",desc:"ガイドライン準拠・自社名義の直接募集支援",p:10000},
+      report:{g:"分析・改善",name:"月次分析レポート(フル版)",desc:"リーチ・保存・導線の層別分析+改善提案",p:15000},
+      mtg:{g:"分析・改善",name:"月次改善ミーティング(30分)",desc:"オンライン実施。レポートをもとに翌月方針をすり合わせ",p:15000},
+      wrep:M_WREP, dash:M_DASH,
+      fb:{g:"他媒体展開",name:"Facebook同時配信",desc:"Instagram投稿の同時展開",p:5000},
+      th:{g:"他媒体展開",name:"Threads展開",desc:"投稿シェア+ひとこと運用",p:5000},
+    },
+    sopts:{
+      s_tt:S_TT, s_yt:S_YT, s_linef:S_LINEF, s_rich:S_RICH,
+      s_card:{g:"初期構築・ツール",name:"デジタル会員証(ファン会員)",desc:"LINEショップカード設定",p:80000},
+      s_auto:S_AUTO, s_dashi:S_DASHI,
+      s_feed:S_FEED, s_car:S_CAR, s_st:S_ST, s_short:S_SHORT, s_telop:S_TELOP, s_sub:S_SUB, s_narr:S_NARR, s_trend:S_TREND, s_cut:S_CUT, s_same:S_SAME, s_long:S_LONG,
+      s_pcoach:{g:"プロ撮影(単発)",name:"オンライン撮影指導(1回)",desc:"Zoom等で撮り方レクチャー(訪問なし)",p:20000},
+      s_psma:S_PH_SMA,
+      s_ppro:{g:"プロ撮影(単発)",name:"プロカメラマン写真撮影",desc:"宣材・アー写・現場撮影 ※規模により増額",p:100000},
+      s_pver:S_PH_VER,
+      s_pnight:{g:"プロ撮影(単発)",name:"夜間・現場撮影",desc:"ライブ・夜イベントの現場をプロが撮影 ※規模により増額",p:70000},
+      s_pportrait:{g:"プロ撮影(単発)",name:"メンバープロフィール撮影",desc:"宣材・紹介用の人物撮影",p:60000},
+      s_pevent:{g:"プロ撮影(単発)",name:"ライブ・イベント撮影(写真・動画)",desc:"※規模により増額",p:120000},
+      s_cd:{g:"イベント(単発)",name:"イベントカウントダウン",desc:"7日前からの告知一式(動員設計の軽量版)",p:20000},
+      s_livep:{g:"イベント(単発)",name:"Instagramライブ企画(台本・進行)",desc:"配信は事務所側で実施",p:30000},
+      s_liveop:{g:"イベント(単発)",name:"ライブ配信運営",desc:"配信・コメント管理 ※日中〜20時台の配信に限る",p:60000},
+      s_livec:{g:"イベント(単発)",name:"ライブ切り抜き制作",desc:"3〜5本作成",p:25000},
+      s_evpk:{g:"イベント(単発)",name:"イベント告知パック",desc:"投稿・ストーリーズ・告知画像一式",p:50000},
+      s_evday:{g:"イベント(単発)",name:"イベント当日リモート実況",desc:"現場からのLINE素材を即時加工投稿 ※現場派遣なし・20時まで",p:70000},
+      s_after:{g:"イベント(単発)",name:"イベントアフタームービー(1本)",desc:"30〜60秒。素材は貴社撮影またはプロ撮影オプション",p:60000},
+      s_evlp:{g:"イベント(単発)",name:"イベント専用LP",desc:"※規模により増額",p:100000},
+      s_mtg60:S_MTG60, s_enjo:S_ENJO, s_recov:S_RECOV, s_train:{g:"分析・研修(単発)",name:"メンバーSNS研修(2時間)",desc:"※オンライン開催・投稿ガイドライン研修",p:100000},
+    },
+    plans:{
+      base:{name:"BASE",p:39800,desc:"公式Instagram 月4投稿+数値報告。最小構成",seg:{feed:0,st:0,reel:0,agent:0},inc:[]},
+      entry:{name:"ENTRY",p:128000,desc:"公式月8投稿+ST週3+リール月2",seg:{feed:1,st:1,reel:1,agent:0},inc:[]},
+      standard:{name:"STANDARD",p:198000,desc:"月12+ST週5+リール月4+動員設計+個人アカ支援+MTG",seg:{feed:2,st:2,reel:2,agent:0},inc:["event","psup","mtg"]},
+      growth:{name:"GROWTH",p:298000,desc:"個人代行3名+物販導線+フルレポートまで全部入り",seg:{feed:2,st:2,reel:2,agent:3},inc:["event","psup","mtg","goods","report"]},
+    },
+    note:NOTE_COMMON+`<b>業態固有</b>:未成年メンバーが在籍する場合は、受注前に運用条件(深夜投稿の見せ方制限・DM誘導禁止等)の合意が必要です。ファンDMの返信代行は全プラン対象外です(DM対応拡張オプションの対象外)。<br>表示価格はすべて税別です。`,
+  },
+  estate:{
+    baseLabel:"BASEプラン(月4投稿・物件リール月1+数値報告)",
+    segs:{
+      feed:{name:"フィード投稿(物件リール込み)",desc:"物件リールの編集込み月間本数",levels:[
+        {l:"月4(リール月1)",p:0},{l:"月6(リール月2)",p:36000},{l:"月10(リール月4)",p:80000},{l:"月14(リール月5+特集1)",p:128000}]},
+      st:{name:"ストーリーズ運用",desc:"新着物件・空き状況・街ネタの発信",levels:[
+        {l:"なし",p:0},{l:"週2",p:15000},{l:"週3",p:24000},{l:"週5",p:40000}]},
+    },
+    opts:{
+      staffi:{g:"投稿・制作",name:"スタッフ紹介シリーズ 月4本",desc:"担当者の顔が見える発信 ※掲載同意は貴社確認",p:30000},
+      en:M_EN, ml:{g:"投稿・制作",name:"多言語対応(1言語)",desc:"外国人入居希望者向けの翻訳・表現調整",p:40000},
+      tiktok:{g:"他媒体展開",name:"TikTok展開 月6本",desc:"物件リールの横展開",p:49800,fx:1},
+      tt8:M_TT8, sht:M_SHT, shn:M_SHN, voom:M_VOOM,
+      fb:{g:"他媒体展開",name:"Facebook同時配信",desc:"Instagram投稿の同時展開",p:5000},
+      th:{g:"他媒体展開",name:"Threads展開",desc:"投稿シェア+ひとこと運用",p:5000},
+      order:{g:"撮影サポート",name:"撮影オーダーの月次更新",desc:"内見時に何を撮るかを毎月具体指示",p:5000},
+      asset:M_ASSET,
+      gbp:{g:"MAP・反響導線",name:"Googleビジネスプロフィール運用",desc:"投稿週1・口コミ返信文の作成・情報整備",p:29800},
+      tana:{g:"MAP・反響導線",name:"週次棚卸し",desc:"掲載中物件の募集状況を毎週照合(おとり広告防止)",p:15000},
+      line:{g:"MAP・反響導線",name:"LINE反響導線の設計・改善",desc:"反響・問い合わせの受け皿づくり",p:10000},
+      uchiwake:{g:"MAP・反響導線",name:"反響の内訳分析",desc:"どの投稿から問い合わせが来たかの分析",p:30000},
+      lmsg:{g:"LINE・CRM",name:"LINE月次配信",desc:"新着物件・相場情報の月4配信",p:30000},
+      lseg:{g:"LINE・CRM",name:"希望条件セグメント配信",desc:"登録者の条件別に物件情報を分離配信",p:50000},
+      dmx:M_DMX,
+      recruit:{g:"採用",name:"求人告知投稿 月2本",desc:"ガイドライン準拠・自社名義の直接募集支援",p:10000},
+      rrep:M_RREP,
+      report:{g:"分析・改善",name:"月次分析レポート(フル版)",desc:"反響・保存・導線の層別分析+改善提案",p:15000},
+      mtg:{g:"分析・改善",name:"月次改善ミーティング(30分)",desc:"オンライン実施。レポートをもとに翌月方針をすり合わせ",p:15000},
+      wrep:M_WREP, dash:M_DASH, multi:M_MULTI,
+    },
+    sopts:{
+      s_tt:S_TT, s_yt:S_YT,
+      s_gbp:{g:"初期構築・ツール",name:"Googleビジネスプロフィール初期改善",desc:"基本情報・カテゴリ・説明文の整備",p:50000},
+      s_apple:{g:"初期構築・ツール",name:"Apple Business Connect整備",desc:"Appleマップの店舗情報",p:30000},
+      s_linef:S_LINEF, s_rich:S_RICH, s_auto:S_AUTO, s_dashi:S_DASHI,
+      s_feed:S_FEED,
+      s_car:{g:"制作・動画(単発)",name:"カルーセル投稿(1本)",desc:"間取り解説・エリア紹介の解説型投稿",p:10000},
+      s_st:S_ST, s_short:S_SHORT, s_telop:S_TELOP, s_sub:S_SUB, s_narr:S_NARR, s_cut:S_CUT,
+      s_long:{g:"制作・動画(単発)",name:"YouTube長尺ルームツアー(1本)",desc:"3〜10分。素材は貴社支給・編集のみ",p:120000},
+      s_voice:{g:"制作・動画(単発)",name:"入居者・お客様の声動画編集(1本)",desc:"※掲載同意は貴社確認",p:20000},
+      s_pcoach:{g:"プロ撮影(単発)",name:"オンライン撮影指導(1回)",desc:"Zoom等で撮り方レクチャー(訪問なし)",p:20000},
+      s_psma:S_PH_SMA,
+      s_ppro:{g:"プロ撮影(単発)",name:"プロカメラマン写真撮影(物件・店舗)",desc:"物件・店舗・人物 ※規模により増額",p:100000},
+      s_pver:{g:"プロ撮影(単発)",name:"縦型動画撮影(ルームツアー素材)",desc:"リール用素材10本程度 ※規模により増額",p:80000,fx:1},
+      s_pnight:{g:"プロ撮影(単発)",name:"夜間撮影(夜景・ライトアップ)",desc:"夜の外観・内装の演出撮影 ※規模により増額",p:70000},
+      s_pportrait:S_PH_STAFF,
+      s_pevent:{g:"プロ撮影(単発)",name:"オープンハウス・イベント撮影",desc:"写真・動画 ※規模により増額",p:120000},
+      s_evlp:{g:"イベント(単発)",name:"オープンハウス・イベントLP",desc:"※規模により増額",p:100000},
+      s_lp:{g:"イベント(単発)",name:"会社紹介LP",desc:"※名義・保守は契約で確定",p:150000},
+      s_rint:S_RINT, s_rday:S_RDAY, s_rlp:S_RLP, s_rline:S_RLINE, s_rfaq:S_RFAQ,
+      s_mtg60:S_MTG60, s_enjo:S_ENJO, s_recov:S_RECOV, s_brand:S_BRAND,
+      s_train:{g:"分析・研修(単発)",name:"スタッフSNS研修(2時間)",desc:"※オンライン開催・内見動画の撮り方研修",p:100000},
+    },
+    plans:{
+      base:{name:"BASE",p:39800,desc:"月4投稿(リール月1)+数値報告。最小構成",seg:{feed:0,st:0},inc:[]},
+      entry:{name:"ENTRY",p:98000,desc:"月6投稿+ST週2+週次棚卸し",seg:{feed:1,st:1},inc:["tana"]},
+      standard:{name:"STANDARD",p:158000,desc:"月10投稿+ST週3+LINE導線+レポート+MTG",seg:{feed:2,st:2},inc:["tana","line","report","mtg"]},
+      growth:{name:"GROWTH",p:248000,desc:"月14投稿+ST週5+反響内訳分析まで全部入り",seg:{feed:3,st:3},inc:["tana","line","report","mtg","uchiwake"]},
+    },
+    note:NOTE_COMMON+`<b>業態固有</b>:物件情報の事実(募集状況・条件)の最終確認は、宅建業者である会社様側の責任範囲です。成約・申込み・条件変更時は即日ご連絡ください(おとり広告防止)。<br>表示価格はすべて税別です。`,
+  },
+  acct:{
+    baseLabel:"BASEプラン(X週2+月1オンライン取材30分+数値報告)",
+    segs:{
+      x:{name:"Xポスト",desc:"課題の言語化・知見の短文発信",levels:[
+        {l:"週2(ベース)",p:0},{l:"週3",p:24000},{l:"週5",p:44000}]},
+      note:{name:"note記事",desc:"取材ベースの深掘り記事(2,000〜3,000字)",levels:[
+        {l:"なし",p:0},{l:"月1本",p:40000},{l:"月2本",p:64000}]},
+      intv:{name:"取材(オンライン)",desc:"Zoom等のオンライン取材でネタを回収(制作の起点・ご訪問はありません)",levels:[
+        {l:"月1回30分(ベース)",p:0},{l:"月1回60分",p:10000}]},
+    },
+    opts:{
+      ig:{g:"発信・制作",name:"Instagram図解転載",desc:"週2投稿(Xの反応が良かった投稿を図解化)",p:29800},
+      wp:{g:"発信・制作",name:"DL資料(ホワイトペーパー)制作",desc:"四半期1本",p:30000},
+      lead:{g:"導線・CRM",name:"無料相談・資料DL導線の設計改善",desc:"プロフィール・記事末尾の導線を継続改善",p:15000},
+      line:{g:"導線・CRM",name:"LINE公式 導線設計・定型文(簡易)",desc:"無料相談の受け皿づくり",p:10000},
+      lmsg:{g:"導線・CRM",name:"LINE月次配信",desc:"経営者向けの情報配信 月4回",p:30000},
+      recruit:{g:"採用",name:"求人告知投稿 月2本",desc:"ガイドライン準拠・自社名義の直接募集支援",p:10000},
+      rrep:M_RREP,
+      report:{g:"分析・改善",name:"月次分析レポート(フル版)",desc:"X・noteの反応の層別分析+改善提案",p:15000},
+      mtg:{g:"分析・改善",name:"月次改善ミーティング(30分)",desc:"オンライン実施。レポートをもとに翌月方針をすり合わせ",p:15000},
+      theme:{g:"分析・改善",name:"X反応分析からのテーマ戦略",desc:"反応データから翌月の発信テーマを設計",p:20000,fx:1},
+      wrep:M_WREP, dash:M_DASH,
+    },
+    sopts:{
+      s_linef:S_LINEF, s_rich:S_RICH, s_auto:S_AUTO, s_dashi:S_DASHI,
+      s_psma:S_PH_SMA,
+      s_ppro:{g:"プロ撮影(単発)",name:"プロカメラマン写真撮影(オフィス)",desc:"オフィス・取材風景・人物 ※規模により増額",p:100000},
+      s_pportrait:{g:"プロ撮影(単発)",name:"代表・スタッフプロフィール撮影",desc:"発信・採用用の人物撮影(プロカメラマン)",p:60000},
+      s_rint:{g:"採用(単発)",name:"スタッフインタビュー動画(1本)",desc:"事務所の雰囲気紹介。撮影は貴社またはプロ撮影オプション ※掲載同意",p:30000},
+      s_rlp:S_RLP, s_rline:S_RLINE, s_rfaq:S_RFAQ,
+      s_mtg60:S_MTG60, s_enjo:S_ENJO, s_recov:S_RECOV,
+    },
+    plans:{
+      base:{name:"BASE",p:39800,desc:"X週2+月1オンライン取材(30分)+数値報告。最小構成",seg:{x:0,note:0,intv:0},inc:[]},
+      entry:{name:"ENTRY",p:98000,desc:"X週3+note月1+月1オンライン取材",seg:{x:1,note:1,intv:0},inc:[]},
+      standard:{name:"STANDARD",p:148000,desc:"X週5+note月2+オンライン取材60分+相談導線+レポート+MTG",seg:{x:2,note:2,intv:1},inc:["lead","report","mtg"]},
+      growth:{name:"GROWTH",p:218000,desc:"ホワイトペーパー+テーマ戦略まで全部入り",seg:{x:2,note:2,intv:1},inc:["lead","report","mtg","wp","theme"]},
+    },
+    note:NOTE_COMMON+`<b>業態固有</b>:主戦場はX・noteです(Instagramは有料オプション)。月1回のオンライン取材(Zoom等・代表実働 月90分前後・ご訪問なし)が制作の前提となります。税務の個別判断・税額に踏み込む表現は行いません。<br>表示価格はすべて税別です。`,
+  },
+};
+// ===== 状態 =====
+let ind="bar";
+let plan="base";
+let seg={};
+let on=new Set();
+let sel=new Set();
+let initDisc=0;
+let view="config";
+function D(){return IND_DATA[ind]}
+function zeroSeg(){return Object.fromEntries(Object.keys(D().segs).map(k=>[k,0]))}
+function selectInd(k){ ind=k; plan="base"; seg=zeroSeg(); on=new Set(); sel=new Set(); render(); }
+function selectPlan(k){ plan=k; seg={...D().plans[k].seg}; on=new Set(D().plans[k].inc); render(); }
+function toggle(k){ on.has(k)?on.delete(k):on.add(k); render(); }
+function stoggle(k){ sel.has(k)?sel.delete(k):sel.add(k); render(); }
+function fmt(n){return n.toLocaleString("ja-JP")}
+// ===== 計算 =====
+function calc(){
+  const d=D(), P=d.plans[plan], basep=d.plans.base.p;
+  let total, singleSum=basep;
+  for(const k in d.segs){ singleSum+=d.segs[k].levels[seg[k]].p; }
+  on.forEach(k=>{ singleSum+=d.opts[k].p; });
+  if(plan==="base"){ total=singleSum; }
+  else{
+    total=P.p;
+    for(const k in d.segs){
+      const incLv=P.seg[k];
+      if(seg[k]>incLv) total+=d.segs[k].levels[seg[k]].p-d.segs[k].levels[incLv].p;
+    }
+    on.forEach(k=>{ if(!P.inc.includes(k)) total+=d.opts[k].p; });
+  }
+  let disc=0;
+  if(plan!=="base"){
+    let incSum=basep;
+    for(const k in d.segs) incSum+=d.segs[k].levels[P.seg[k]].p;
+    P.inc.forEach(k=>incSum+=d.opts[k].p);
+    disc=incSum-P.p;
+  }
+  return {total,disc};
+}
+function calcOne(){ let s=0; sel.forEach(k=>s+=D().sopts[k].p); return s; }
+// ===== 描画 =====
+function groupHtml(entries,rowFn){
+  let html="",last=null;
+  for(const [k,o] of entries){
+    if(o.g!==last){ html+=`<div class="ogroup">${o.g}</div>`; last=o.g; }
+    html+=rowFn(k,o);
+  }
+  return html;
+}
+function render(){
+  const d=D(), P=d.plans[plan];
+  document.getElementById("inds").innerHTML=Object.entries(INDUSTRIES).map(([k,v])=>
+    `<div class="ind ${k===ind?"active":""}" onclick="selectInd('${k}')">
+      <div class="iname">${v.tab}</div><div class="idesc">${v.sub}</div></div>`).join("");
+  document.getElementById("plans").innerHTML=Object.entries(d.plans).map(([k,v])=>
+    `<div class="plan ${k===plan?"active":""}" onclick="selectPlan('${k}')">
+      ${k==="standard"?'<div class="recbadge-card">★ オススメ</div>':""}
+      <div class="pname">${v.name}</div>
+      <div class="pprice">¥${fmt(v.p)}<span>/月</span></div>
+      <div class="pdesc">${v.desc}</div></div>`).join("");
+  document.getElementById("segs").innerHTML=Object.entries(d.segs).map(([k,s])=>{
+    const incLv=plan==="base"?-1:P.seg[k];
+    return `<div class="segrow"><div class="name">${s.name}</div><div class="desc">${s.desc}</div>
+      <div class="seg">${s.levels.map((lv,i)=>{
+        const isSel=seg[k]===i, isInc=i===incLv&&plan!=="base";
+        const disabled=plan!=="base"&&i<incLv;
+        const stdLv=d.plans.standard.seg[k];
+        const rec=i===stdLv&&seg[k]<stdLv&&!disabled;
+        let sub="";
+        if(plan!=="base"&&i>incLv) sub=`<span class="up">+¥${fmt(lv.p-s.levels[incLv].p)}</span>`;
+        else if(plan==="base"&&lv.p>0) sub=`<span class="up">+¥${fmt(lv.p)}</span>`;
+        else if(isInc) sub=`<span class="up">プランに含む</span>`;
+        return `<button class="${isSel?(isInc?"inc":"sel"):""}${rec?" rec":""}" ${disabled?"disabled":""}
+          onclick="seg['${k}']=${i};render()">${lv.l}${sub}</button>`;
+      }).join("")}</div></div>`;
+  }).join("");
+  document.getElementById("opts").innerHTML=groupHtml(Object.entries(d.opts),(k,o)=>{
+    const inc=plan!=="base"&&P.inc.includes(k);
+    const selOn=on.has(k);
+    const rec=d.plans.standard.inc.includes(k)&&!inc&&!selOn;
+    const hourTag="";
+    return `<div class="opt ${inc?"included":(selOn?"selected-extra":"")}">
+      <div class="info"><div class="name">${o.name}${inc?'<span class="badge-inc">含</span>':""}${rec?'<span class="recbadge">★ オススメ</span>':""}${o.fx&&!inc&&!selOn?'<span class="fxbadge">フォロワー増◎</span>':""}${hourTag}</div>
+      <div class="desc">${o.desc}</div></div>
+      <div class="price">${inc?"—":"+¥"+fmt(o.p)}</div>
+      <div class="tgl ${inc?"lock":(selOn?"on":"")}" onclick="${inc?"":`toggle('${k}')`}"></div></div>`;
+  });
+  document.getElementById("sopts").innerHTML=groupHtml(Object.entries(d.sopts),(k,o)=>{
+    const s=sel.has(k);
+    return `<div class="opt ${s?"selected-extra":""}">
+      <div class="info"><div class="name">${o.name}${o.fx&&!s?'<span class="fxbadge">フォロワー増◎</span>':""}</div><div class="desc">${o.desc}</div></div>
+      <div class="price">+¥${fmt(o.p)}</div>
+      <div class="tgl ${s?"on":""}" onclick="stoggle('${k}')"></div></div>`;
+  })+`<div class="qrow sum"><span class="ql">単発合計(初月のみ)</span><span class="qv">¥${fmt(calcOne())}</span></div>`;
+  document.getElementById("note").innerHTML=d.note;
+  const {total,disc}=calc();
+  document.getElementById("total").textContent=fmt(total);
+  const db=document.getElementById("disc");
+  if(disc>0){db.classList.add("show");document.getElementById("discv").textContent=`−¥${fmt(disc)} お得`;}
+  else db.classList.remove("show");
+  if(view==="quote") renderQuote();
+  if(view==="formal") renderFormal();
+  updateDiscUI();
+}
+// ===== 見積り確認画面 =====
+function renderQuote(){
+  const d=D(), P=d.plans[plan];
+  const {total}=calc();
+  let rows=[];
+  if(plan==="base"){
+    rows.push([d.baseLabel,d.plans.base.p]);
+    for(const k in d.segs){ if(seg[k]>0) rows.push([`${d.segs[k].name} ${d.segs[k].levels[seg[k]].l}`,d.segs[k].levels[seg[k]].p]); }
+    on.forEach(k=>rows.push([d.opts[k].name,d.opts[k].p]));
+  }else{
+    rows.push([`【${INDUSTRIES[ind].tab}】${P.name}プラン(セット一式)`,P.p]);
+    for(const k in d.segs){
+      const incLv=P.seg[k];
+      if(seg[k]>incLv) rows.push([`${d.segs[k].name} ${d.segs[k].levels[seg[k]].l}へ増量`,d.segs[k].levels[seg[k]].p-d.segs[k].levels[incLv].p]);
+    }
+    on.forEach(k=>{ if(!P.inc.includes(k)) rows.push([d.opts[k].name,d.opts[k].p]); });
+  }
+  document.getElementById("qmonthly").innerHTML=
+    rows.map(([n,p])=>`<div class="qrow"><span class="ql">${n}</span><span class="qv">¥${fmt(p)}</span></div>`).join("")
+    +`<div class="qrow sum"><span class="ql">月額合計</span><span class="qv">¥${fmt(total)}</span></div>`;
+  document.getElementById("chips").innerHTML=DISC_CHIPS.map(c=>
+    `<button class="${initDisc===c.v?"sel":""}" onclick="setDisc(${c.v},true)">${c.l}</button>`).join("");
+}
+function setDisc(v,fromChip){
+  let n=Math.floor(Number(v)||0);
+  if(n<0)n=0; if(n>INIT_PRICE)n=INIT_PRICE;
+  initDisc=n;
+  if(fromChip) document.getElementById("discin").value=n;
+  updateDiscUI();
+}
+function updateDiscUI(){
+  const {total}=calc();
+  const one=calcOne();
+  const paidInit=INIT_PRICE-initDisc;
+  const dr=document.getElementById("qdiscrow");
+  dr.style.display=initDisc>0?"flex":"none";
+  document.getElementById("qdiscv").textContent=`−¥${fmt(initDisc)}`;
+  document.getElementById("qinitbase").className=initDisc>0?"qrow strike":"qrow";
+  document.getElementById("qinitv").textContent=paidInit===0?"¥0(無料)":`¥${fmt(paidInit)}`;
+  document.getElementById("qgrand").textContent=fmt(total+paidInit+one);
+  document.getElementById("init").innerHTML=
+    `初期費用 <b>¥${fmt(paidInit)}</b>${one>0?` + 単発 <b>¥${fmt(one)}</b>`:""}(初月のみ${initDisc>0?`・¥${fmt(initDisc)}引き適用`:""})`;
+  document.querySelectorAll("#chips button").forEach((b,i)=>{
+    b.className=DISC_CHIPS[i].v===initDisc?"sel":"";
+  });
+}
+// ===== 画面遷移(構成→確認→正式見積書) =====
+let ftoName="";
+function setView(v){
+  view=v;
+  document.getElementById("view-config").style.display=v==="config"?"":"none";
+  document.getElementById("view-quote").style.display=v==="quote"?"":"none";
+  document.getElementById("view-formal").style.display=v==="formal"?"":"none";
+  const nav=document.getElementById("navbtn"), back=document.getElementById("backbtn");
+  nav.textContent=v==="config"?"次へ":(v==="quote"?"見積書を発行":"印刷・PDF保存");
+  back.style.display=v==="config"?"none":"";
+  back.textContent=v==="quote"?"構成に戻る":"確認に戻る";
+  window.scrollTo(0,0);
+  render();
+}
+function goNext(){ if(view==="config")setView("quote"); else if(view==="quote")setView("formal"); else window.print(); }
+function goBack(){ if(view==="formal")setView("quote"); else setView("config"); }
+// ===== 正式見積書 =====
+function renderFormal(){
+  const d=D(), P=d.plans[plan];
+  const {total}=calc(); const one=calcOne(); const paidInit=INIT_PRICE-initDisc;
+  const now=new Date(); const z=n=>String(n).padStart(2,"0");
+  document.getElementById("fno").textContent=`EX-${now.getFullYear()}${z(now.getMonth()+1)}${z(now.getDate())}-${z(now.getHours())}${z(now.getMinutes())}`;
+  document.getElementById("fdate").textContent=`${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日`;
+  document.getElementById("fto").value=ftoName;
+  document.getElementById("fsubject").textContent=`件名:SNS運用代行サービス(${INDUSTRIES[ind].sub})`;
+  let rows=[];
+  if(plan==="base"){
+    rows.push([d.baseLabel,"月額",d.plans.base.p]);
+    for(const k in d.segs){ if(seg[k]>0) rows.push([`${d.segs[k].name} ${d.segs[k].levels[seg[k]].l}`,"月額",d.segs[k].levels[seg[k]].p]); }
+    on.forEach(k=>rows.push([d.opts[k].name,"月額",d.opts[k].p]));
+  }else{
+    rows.push([`${P.name}プラン(セット一式)`,"月額",P.p]);
+    for(const k in d.segs){
+      const incLv=P.seg[k];
+      if(seg[k]>incLv) rows.push([`${d.segs[k].name} ${d.segs[k].levels[seg[k]].l}へ増量`,"月額",d.segs[k].levels[seg[k]].p-d.segs[k].levels[incLv].p]);
+    }
+    on.forEach(k=>{ if(!P.inc.includes(k)) rows.push([d.opts[k].name,"月額",d.opts[k].p]); });
+  }
+  sel.forEach(k=>rows.push([d.sopts[k].name,"初月のみ",d.sopts[k].p]));
+  rows.push(["初期費用","初月のみ",INIT_PRICE]);
+  if(initDisc>0) rows.push(["お値引き(初期費用)","初月のみ",-initDisc]);
+  const grand=total+one+paidInit;
+  const tax=Math.floor(grand*0.1);
+  const mtax=Math.floor(total*0.1);
+  document.getElementById("ftable").innerHTML=
+    `<tr><th>項目</th><th>区分</th><th>金額(税別)</th></tr>`
+    +rows.map(([n,c,p])=>`<tr><td>${n}</td><td class="cat">${c}</td><td>${p<0?"−¥"+fmt(-p):"¥"+fmt(p)}</td></tr>`).join("")
+    +`<tr class="shsum"><td>月額合計(毎月のお支払い)</td><td class="cat">税別</td><td>¥${fmt(total)}/月</td></tr>`
+    +`<tr class="shsum"><td>初月のみ費用 小計(単発+初期費用−値引き)</td><td class="cat">税別</td><td>¥${fmt(one+paidInit)}</td></tr>`
+    +`<tr class="shsum"><td>初月お支払い合計</td><td class="cat">税別</td><td>¥${fmt(grand)}</td></tr>`
+    +`<tr class="shsum"><td>消費税(10%)</td><td class="cat"></td><td>¥${fmt(tax)}</td></tr>`
+    +`<tr class="shgrand"><td>初月お支払い合計(税込)</td><td></td><td>¥${fmt(grand+tax)}</td></tr>`
+    +`<tr class="shsum"><td>翌月以降のお支払い(税込)</td><td class="cat">毎月</td><td>¥${fmt(total+mtax)}/月</td></tr>`;
+  document.getElementById("fremarks").innerHTML=
+    `【お支払い・ご契約条件】月額料金は当月分を前月末日までに前払い/ご契約は1ヶ月ごとの自動更新(解約は前月末までのご連絡)/全投稿は公開前に貴社確認を経て公開します。<br>`
+    +`【単発オプション・初期費用】初月のみのご請求です。プロ撮影は提携カメラマンチームが担当し、日程は別途調整します。<br>`
+    +`【成果について】フォロワー数・来店数・成約数・応募数等の成果を保証するものではありません。<br>`
+    +`【対象外】広告運用・インフルエンサー起用は別途お見積り(広告は預かり予算の20%を運用手数料、80%を配信費に充当)。<br>`
+    +`お支払い方法・お振込先はご契約書にてご案内いたします。`;
+}
+selectInd("bar");
+</script>
+</body>
+</html>
