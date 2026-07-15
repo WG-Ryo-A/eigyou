@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EXRISE FOLLOWERS | SNS運用代行 ― EXRISE PROJECT</title>
+<meta name="description" content="EXRISE FOLLOWERS ― LINEに素材を送るだけ。企画・撮影指示・編集・投稿・分析・改善まで丸ごと代行するSNS運用サービス。月額39,800円から。">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+// ===== 設定(ここだけ差し替えればOK) =====
+const CONTACT_URL = "https://exrise-project.co.jp/contact/";
+document.addEventListener("DOMContentLoaded",()=>{
+  document.querySelectorAll("[data-contact]").forEach(a=>a.href=CONTACT_URL);
+});
+</script>
+<style>
+:root{
+  --navy:#0A1630; --navy2:#0E1E42; --navy3:#12264F; --line:#2A3A62;
+  --gold:#C9A961; --gold2:#E3C77E; --text:#F2F3F7; --muted:#9AA5C0; --amber:#E8622D;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;background:#0A1630}
+body{background:linear-gradient(160deg,#081226 0%,#0A1630 40%,#0E1E42 100%) fixed;color:var(--text);font-family:'Zen Kaku Gothic New',sans-serif;font-size:15.5px;line-height:1.85}
+.wrap{max-width:960px;margin:0 auto;padding:0 22px}
+section{padding:64px 0}
+h2{font-family:'Shippori Mincho',serif;font-size:27px;font-weight:600;text-align:center;line-height:1.5}
+h2 em{font-style:normal;color:var(--gold2)}
+.sec-en{display:block;text-align:center;font-family:'Shippori Mincho',serif;font-size:11px;letter-spacing:.45em;color:var(--gold);margin-bottom:10px}
+.sec-lede{text-align:center;color:var(--muted);font-size:14px;margin:14px auto 40px;max-width:640px}
+/* hero */
+.hero{padding:34px 0 60px;text-align:center;border-bottom:1px solid var(--line)}
+.heroimg{width:100%;height:auto;display:block;border:1px solid var(--line)}
+.hero .brand{font-family:'Shippori Mincho',serif;font-size:12px;letter-spacing:.5em;color:var(--gold)}
+.hero h1{font-family:'Shippori Mincho',serif;font-size:clamp(30px,5.4vw,46px);font-weight:700;margin:26px 0 8px;line-height:1.45}
+.hero h1 em{font-style:normal;color:var(--gold2)}
+.hero .sub{color:var(--muted);font-size:15px;max-width:620px;margin:14px auto 0}
+.hero .cta-row{margin-top:38px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-block;padding:15px 34px;border-radius:4px;font-weight:700;font-size:15px;letter-spacing:.08em;text-decoration:none;transition:opacity .2s,transform .15s}
+.btn:active{transform:scale(.98)}
+.btn-gold{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#0A1630}
+.btn-line{border:1px solid var(--gold);color:var(--gold2);background:transparent}
+.stats{display:flex;justify-content:center;gap:0;margin-top:46px;flex-wrap:wrap}
+.stat{padding:6px 28px;border-left:1px solid var(--line);text-align:center}
+.stat:first-child{border-left:none}
+.stat b{display:block;font-family:'Shippori Mincho',serif;font-size:21px;color:var(--gold2);font-weight:600}
+.stat span{font-size:11.5px;color:var(--muted);letter-spacing:.1em}
+/* value cards */
+.cards3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.vcard{border:1px solid var(--gold);background:linear-gradient(180deg,#0E1E4290,#0A163090);padding:30px 24px;text-align:center}
+.vcard .num{font-family:'Shippori Mincho',serif;color:var(--gold);letter-spacing:.35em;font-size:11px}
+.vcard h3{font-family:'Shippori Mincho',serif;font-size:18px;margin:12px 0 10px;font-weight:600}
+.vcard p{font-size:13.5px;color:var(--muted)}
+/* flow */
+.flow{counter-reset:step;max-width:680px;margin:0 auto}
+.step{display:flex;gap:18px;padding:18px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.step .no{counter-increment:step;flex-shrink:0;width:44px;height:44px;border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Shippori Mincho',serif;color:var(--gold2);font-size:16px}
+.step .no::before{content:counter(step,decimal-leading-zero)}
+.step h3{font-size:16px;font-weight:700;margin-bottom:2px}
+.step p{font-size:13.5px;color:var(--muted)}
+/* industry */
+.icards{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:16px}
+.icard{border:1px solid var(--line);background:#0C1A3A;padding:26px 22px;display:flex;flex-direction:column;transition:border-color .25s}
+.icard:hover{border-color:var(--gold)}
+.icard .en{font-family:'Shippori Mincho',serif;font-size:17px;letter-spacing:.12em;color:var(--gold2)}
+.icard .ja{font-size:12px;color:var(--muted);margin:2px 0 12px}
+.icard p{font-size:13px;color:var(--muted)}
+.icard p.trouble{color:#8E99B8;font-size:12.5px;background:#0A142E;border-left:2px solid var(--line);padding:10px 12px;margin:4px 0 10px;font-style:normal}
+.icard p:last-child{flex:1}
+.icard a{margin-top:18px;display:block;text-align:center;border:1px solid var(--gold);color:var(--gold2);text-decoration:none;font-size:13px;font-weight:700;padding:10px;border-radius:3px;letter-spacing:.08em}
+.icard a:hover{background:var(--gold);color:#0A1630}
+/* plans */
+.pcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.pcard{border:1px solid var(--line);background:#0C1A3A;padding:24px 20px;text-align:center;position:relative}
+.pcard.reco{border-color:var(--gold)}
+.pcard.reco::after{content:"オススメ";position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:linear-gradient(180deg,var(--gold2),var(--gold));color:#0A1630;font-size:10.5px;font-weight:700;padding:2px 14px;border-radius:99px}
+.pcard .pn{font-family:'Shippori Mincho',serif;letter-spacing:.2em;font-size:13px;color:var(--muted)}
+.pcard .pp{font-family:'Shippori Mincho',serif;font-size:24px;color:var(--gold2);margin:8px 0 2px}
+.pcard .pp span{font-size:11px;color:var(--muted);font-family:'Zen Kaku Gothic New'}
+.pcard p{font-size:12px;color:var(--muted)}
+.plan-note{text-align:center;color:var(--muted);font-size:12.5px;margin-top:22px}
+/* honest */
+.honest{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;max-width:820px;margin:0 auto}
+.hbox{border:1px solid var(--line);padding:28px 26px;background:#0C1A3A}
+.hbox.ok{border-color:var(--gold)}
+.hbox h3{font-family:'Shippori Mincho',serif;font-size:17px;margin-bottom:14px;font-weight:600}
+.hbox.ok h3{color:var(--gold2)}
+.hbox li{list-style:none;font-size:13.5px;color:var(--muted);padding:7px 0 7px 20px;position:relative;border-bottom:1px dashed #22315580}
+.hbox li:last-child{border-bottom:none}
+.hbox.ok li::before{content:"◆";color:var(--gold);position:absolute;left:0;font-size:10px;top:11px}
+.hbox.ng li::before{content:"—";color:#6B7694;position:absolute;left:0}
+/* option band */
+.band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#0C1A3A66;text-align:center}
+.band .nums{display:flex;justify-content:center;gap:0;flex-wrap:wrap;margin:30px 0 10px}
+.band .n{padding:0 34px;border-left:1px solid var(--line)}
+.band .n:first-child{border-left:none}
+.band .n b{display:block;font-family:'Shippori Mincho',serif;font-size:34px;color:var(--gold2);font-weight:600}
+.band .n span{font-size:12px;color:var(--muted);letter-spacing:.12em}
+.band p{color:var(--muted);font-size:13.5px;max-width:620px;margin:8px auto 0}
+/* cta */
+.cta{text-align:center}
+.cta .box{border:1px solid var(--gold);padding:52px 28px;background:linear-gradient(180deg,#0E1E42,#0A1630)}
+.cta h2{margin-bottom:10px}
+.cta p{color:var(--muted);font-size:14px;max-width:560px;margin:0 auto 30px}
+footer{border-top:1px solid var(--line);padding:36px 0 44px;text-align:center}
+footer .fb{font-family:'Shippori Mincho',serif;letter-spacing:.5em;color:var(--gold);font-size:13px}
+footer p{color:#6B7694;font-size:11px;margin-top:12px}
+</style>
+</head>
+<body>
+
+<header class="hero"><div class="wrap">
+  <img class="heroimg" src="top.jpg" alt="EXRISE FOLLOWERS by EXRISE PROJECT ― 集める。魅せる。伸ばしていく。SNS運用を、丸ごと。">
+  <p class="sub">LINEに素材を送るだけ。企画・撮影指示・編集・投稿・分析・翌月の改善提案まで、専門チームがすべて代行します。飲食・接客業から、芸能事務所・不動産業・会計事務所まで。</p>
+  <div class="cta-row">
+    <a class="btn btn-gold" data-contact href="#">無料SNS診断を申し込む</a>
+    <a class="btn btn-line" href="#contact">お見積もりはこちら</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>¥39,800<span style="font-size:12px">〜/月</span></b><span>月額(税別)</span></div>
+    <div class="stat"><b>縛りなし</b><span>1ヶ月ごとの自動更新</span></div>
+    <div class="stat"><b>全件確認</b><span>公開前に貴社チェック</span></div>
+    <div class="stat"><b>48時間</b><span>無料診断のお届け</span></div>
+  </div>
+</div></header>
+
+<section><div class="wrap">
+  <span class="sec-en">VALUE</span>
+  <h2>私たちが提供する<em>3つの価値</em></h2>
+  <p class="sec-lede">SNSは、あなたの商売にとって24時間働く「営業マン」です。私たちはその営業マンを、最高の状態で働かせ続けます。</p>
+  <div class="cards3">
+    <div class="vcard"><div class="num">0 1</div><h3>機会損失をなくす</h3><p>「今日やっているか分からない」「どんな会社か分からない」——お客様が選ぶ直前の離脱を防ぎ、選ばれる導線を整えます。</p></div>
+    <div class="vcard"><div class="num">0 2</div><h3>反応を分析し、改善を続ける</h3><p>投稿の反応をデータで把握。次に撮るべき素材・打ち出すべき情報を毎月ご提案します。やりっぱなしにしません。</p></div>
+    <div class="vcard"><div class="num">0 3</div><h3>魅力を、積み上げる</h3><p>空気感・人柄・こだわりが伝わる投稿を継続することで、集客だけでなく自然な採用応募にもつながります。</p></div>
+  </div>
+</div></section>
+
+<section id="sim" style="padding-top:20px"><div class="wrap">
+  <span class="sec-en">CASE</span>
+  <h2>例えば、<em>こんな使われ方</em>。</h2>
+  <p class="sec-lede">業種ごとに運用の型をゼロから設計しています。イメージしやすいよう、架空の例でご紹介します。</p>
+  <div class="icards">
+    <div class="icard"><div class="en">飲食・接客業</div><div class="ja">歌舞伎町のシーシャバー(フォロワー350人)の場合</div>
+      <p class="trouble">「最終投稿が2ヶ月前。『今日やってるか分からない店』として、深夜の検索客に素通りされていた」</p>
+      <p>→ 毎日の「本日営業中」ストーリーズと週2本の店内投稿で、"今夜やってる店"に。マスターの作業はLINEに写真を送るだけ、週10分。</p></div>
+    <div class="icard"><div class="en">芸能事務所</div><div class="ja">結成1年のアイドルグループの場合</div>
+      <p class="trouble">「公式アカウントが告知の掲示板になっていて、フォロワーが増えない。個人アカはルールがなく統制できない」</p>
+      <p>→ 切り抜きリール+日常投稿に再設計し、個人アカにはガイドラインとテンプレを整備。イベント2週間前から逆算した告知で現場に呼ぶ。</p></div>
+    <div class="icard"><div class="en">不動産業</div><div class="ja">駅前の不動産会社の場合</div>
+      <p class="trouble">「ポータルの掲載費が上がり続けるのに、反響は減っている。自社の集客導線がない」</p>
+      <p>→ 内見のついでにスタッフがスマホで10秒×4カット。それをルームツアーリールに編集し、LINE登録の自社反響導線を作る。募集状況は毎週照合して安全に。</p></div>
+    <div class="icard"><div class="en">会計事務所</div><div class="ja">経理代行会社の代表の場合</div>
+      <p class="trouble">「集客が紹介頼み。発信した方がいいのは分かっているが、書く時間がない」</p>
+      <p>→ 月1回60分のオンライン取材だけで、X週5本+note月2本を代行執筆。「月次が遅い」で悩む経営者に見つかる発信へ。代表の実働は月90分。</p></div>
+  </div>
+  <p style="text-align:center;color:#6B7694;font-size:11.5px;margin-top:18px">※上記は実在の事例ではなく、ご提供内容をイメージいただくための架空の例です。</p>
+  <div style="text-align:center;margin-top:26px">
+    <a class="btn btn-gold" data-contact href="#">お見積もりはこちら</a>
+    <p style="color:var(--muted);font-size:12.5px;margin-top:12px">ご希望の構成をうかがい、その場でお見積書をお出しします。</p>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <span class="sec-en">PRICE</span>
+  <h2>月額<em>39,800円</em>から。</h2>
+  <p class="sec-lede">4つのプランに、月額オプション約30種・単発オプション約40種(プロカメラマン撮影を含む)を自由に組み合わせられます。下記はバー業態の例。業種別の詳細は、無料診断とあわせて個別にお見積りします。</p>
+  <div class="pcards">
+    <div class="pcard"><div class="pn">BASE</div><div class="pp">¥39,800<span>/月</span></div><p>まず発信を止めないための最小構成。単品トッピング自由</p></div>
+    <div class="pcard"><div class="pn">ENTRY</div><div class="pp">¥59,800<span>/月</span></div><p>運用負荷を限定した導入プラン</p></div>
+    <div class="pcard reco"><div class="pn">STANDARD</div><div class="pp">¥98,000<span>/月</span></div><p>投稿・ストーリーズ・リール・分析レポートまでのフル運用</p></div>
+    <div class="pcard"><div class="pn">PREMIUM</div><div class="pp">¥158,000<span>/月</span></div><p>改善ミーティング・採用告知まで全部入り</p></div>
+  </div>
+  <p class="plan-note">別途初期費用(初月のみ)。表示価格はすべて税別です。契約は1ヶ月ごとの自動更新で、縛りはありません。</p>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <span class="sec-en">OPTIONS</span>
+  <h2>「これもできる?」に、<em>ほぼ全部</em>応えます。</h2>
+  <div class="nums">
+    <div class="n"><b>30<span style="font-size:15px">種+</span></b><span>月額オプション</span></div>
+    <div class="n"><b>40<span style="font-size:15px">種+</span></b><span>単発オプション</span></div>
+    <div class="n"><b>7<span style="font-size:15px">種</span></b><span>プロカメラマン撮影</span></div>
+  </div>
+  <p>TikTok・YouTube Shorts展開、多言語対応、LINE・CRM構築、Googleマップ整備、採用支援、イベント実況、プロ撮影(宣材・物件・深夜の店内まで)——。使う・使わないは自由。必要な分だけ積み上げる料金体系です。</p>
+</div></section>
+
+<section><div class="wrap">
+  <span class="sec-en">PROMISE</span>
+  <h2>約束すること、<em>しないこと</em>。</h2>
+  <p class="sec-lede">SNS運用の営業トークには、守れない約束があふれています。私たちは最初に線を引きます。</p>
+  <div class="honest">
+    <div class="hbox ok"><h3>私たちが約束すること</h3><ul>
+      <li>発信が止まらないこと。素材が少ない月も運用を継続します</li>
+      <li>全投稿を公開前に貴社確認へ。掲載事故を仕組みで防ぎます</li>
+      <li>数字を毎月見て、翌月の改善案とセットで報告すること</li>
+      <li>下がった数字も隠さず、理由の仮説と対策を添えて共有すること</li>
+    </ul></div>
+    <div class="hbox ng"><h3>あえて約束しないこと</h3><ul>
+      <li>フォロワー数・来店数・成約数・応募数の保証(保証を謳う業者にご注意ください)</li>
+      <li>深夜・即時の対応</li>
+      <li>DM・コメントの全件返信代行(定型・上限つきオプションのみ)</li>
+    </ul></div>
+  </div>
+</div></section>
+
+<section style="padding-bottom:30px"><div class="wrap">
+  <span class="sec-en">FLOW</span>
+  <h2>ご契約まで、<em>むずかしいことは何も</em>。</h2>
+  <div class="flow" style="margin-top:34px">
+    <div class="step"><div class="no"></div><div><h3>無料SNS診断</h3><p>現状のアカウントを拝見し、お客様がどこで離脱しているかをA4 1枚で。48時間以内にお届けします。</p></div></div>
+    <div class="step"><div class="no"></div><div><h3>ヒアリングと初期設計(約15分)</h3><p>お店・会社の強み、NG事項、投稿のトーンを確認。プロフィール・導線を整えます。</p></div></div>
+    <div class="step"><div class="no"></div><div><h3>LINEに素材を送るだけ</h3><p>週2〜3枚、スマホ写真でOK。何を撮るかはこちらから指示が届きます。ブレていても大丈夫。</p></div></div>
+    <div class="step"><div class="no"></div><div><h3>確認して、公開</h3><p>すべての投稿は公開前に貴社チェックを経由。OKをもらったものだけが世に出ます。</p></div></div>
+    <div class="step"><div class="no"></div><div><h3>毎月、数字と次の一手</h3><p>月次レポートで反応を共有し、翌月の計画を更新。発信は止まらず、少しずつ強くなります。</p></div></div>
+  </div>
+</div></section>
+
+<section class="cta" id="contact"><div class="wrap"><div class="box">
+  <span class="sec-en">CONTACT</span>
+  <h2>まずは、<em>無料診断</em>から。</h2>
+  <p>売り込みは診断を見ていただいてからで結構です。「今、何が機会損失になっているか」を1枚にしてお渡しします。</p>
+  <div class="cta-row" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+    <a class="btn btn-gold" data-contact href="#">無料SNS診断を申し込む</a>
+    <a class="btn btn-line" data-contact href="#">お見積もりを依頼する</a>
+  </div>
+</div></div></section>
+
+<footer><div class="wrap">
+  <div class="fb">EXRISE PROJECT</div>
+  <p>EXRISE FOLLOWERS ― SNS運用代行/表示価格はすべて税別です。成果(フォロワー数・来店数・成約数等)を保証するものではありません。</p>
+</div></footer>
+
+</body>
+</html>
