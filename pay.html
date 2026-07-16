@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お支払い手続き | EXRISE FOLLOWERS ― EXRISE PROJECT</title>
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+// ================= 設定(Stripeダッシュボードで発行したPayment LinkのURLを貼る) =================
+// サブスクリプション(月額・自動更新)のPayment Linkをプランごとに発行して貼ってください。
+// 空文字("")のままのボタンは「準備中」表示になります。
+const LINKS = {
+  bar:    { base:"", entry:"", standard:"", premium:"" },   // 飲食・接客業
+  idol:   { base:"", entry:"", standard:"", premium:"" },   // 芸能事務所
+  estate: { base:"", entry:"", standard:"", premium:"" },   // 不動産業
+  acct:   { base:"", entry:"", standard:"", premium:"" },   // 会計事務所
+};
+// オプション込み等の個別金額用:Stripeで「顧客が金額を入力できる」Payment Link、
+// または顧客ごとに発行したリンクを使う場合はこちら(空なら案内文のみ表示)
+const CUSTOM_LINK = "";
+// ==========================================================================================
+
+const PLANS = {
+  bar:    {label:"飲食・接客業",  base:39800, entry:59800,  standard:98000,  premium:158000},
+  idol:   {label:"芸能事務所",    base:39800, entry:128000, standard:198000, premium:298000},
+  estate: {label:"不動産業",      base:39800, entry:98000,  standard:158000, premium:248000},
+  acct:   {label:"会計事務所",    base:39800, entry:98000,  standard:148000, premium:218000},
+};
+const PNAMES = {base:"BASE", entry:"ENTRY", standard:"STANDARD", premium:"PREMIUM"};
+
+let ind=null, plan=null;
+const fmt = n => n.toLocaleString("ja-JP");
+
+function selInd(k){ ind=k; plan=null; render(); }
+function selPlan(k){ plan=k; render(); }
+
+function payUrl(){
+  const base = LINKS[ind]?.[plan] || "";
+  if(!base) return "";
+  const name = document.getElementById("shop").value.trim();
+  const mail = document.getElementById("mail").value.trim();
+  const u = new URL(base);
+  if(name) u.searchParams.set("client_reference_id", name.replace(/[^\w\-ぁ-んァ-ヶ一-龠ー]/g,"_").slice(0,180));
+  if(mail) u.searchParams.set("prefilled_email", mail);
+  return u.toString();
+}
+function go(){
+  const name=document.getElementById("shop").value.trim();
+  const mail=document.getElementById("mail").value.trim();
+  const err=document.getElementById("err");
+  if(!ind||!plan){ err.textContent="業種とプランを選択してください。"; return; }
+  if(!name){ err.textContent="ご契約の店舗名・会社名を入力してください。"; return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail)){ err.textContent="メールアドレスを正しく入力してください。"; return; }
+  err.textContent="";
+  const u=payUrl();
+  if(!u){ err.textContent="このプランのお支払いリンクは現在準備中です。担当者にご連絡ください。"; return; }
+  location.href=u;
+}
+function render(){
+  document.querySelectorAll("[data-ind]").forEach(b=>b.classList.toggle("sel", b.dataset.ind===ind));
+  const pw=document.getElementById("plans");
+  pw.style.display = ind ? "" : "none";
+  if(ind){
+    pw.querySelector(".cards").innerHTML = Object.keys(PNAMES).map(k=>{
+      const ready = !!(LINKS[ind]&&LINKS[ind][k]);
+      return `<button class="pcard ${plan===k?"sel":""}" onclick="selPlan('${k}')">
+        <span class="pn">${PNAMES[k]}${k==="standard"?'<span class="rec">推奨</span>':""}</span>
+        <span class="pp">¥${fmt(PLANS[ind][k])}<small>/月(税別)</small></span>
+        ${ready?"":'<span class="prep">リンク準備中</span>'}</button>`;
+    }).join("");
+  }
+  const sum=document.getElementById("sum");
+  if(ind&&plan){
+    sum.style.display="";
+    document.getElementById("sump").textContent=`${PLANS[ind].label} / ${PNAMES[plan]}プラン`;
+    document.getElementById("suma").textContent=`月額 ¥${fmt(PLANS[ind][plan])}(税別)`;
+  } else sum.style.display="none";
+}
+document.addEventListener("DOMContentLoaded",render);
+</script>
+<style>
+:root{ --navy:#0A1630; --line:#2A3A62; --gold:#C9A961; --gold2:#E3C77E; --text:#F2F3F7; --muted:#9AA5C0; }
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:#0A1630}
+body{background:linear-gradient(160deg,#081226,#0E1E42) fixed;color:var(--text);font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;line-height:1.8}
+.wrap{max-width:640px;margin:0 auto;padding:40px 20px 80px}
+.brand{font-family:'Shippori Mincho',serif;font-size:11px;letter-spacing:.45em;color:var(--gold);text-align:center}
+h1{font-family:'Shippori Mincho',serif;font-size:24px;font-weight:600;text-align:center;margin:14px 0 6px}
+.lede{color:var(--muted);font-size:13px;text-align:center;margin-bottom:34px}
+h2{font-size:12.5px;letter-spacing:.18em;color:var(--gold2);margin:28px 0 10px;font-weight:700}
+.inds{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.inds button,.pcard{background:#0C1A3A;border:1px solid var(--line);color:var(--text);border-radius:8px;padding:14px 10px;font-family:inherit;font-size:14px;cursor:pointer;text-align:center;transition:border-color .2s}
+.inds button.sel,.pcard.sel{border-color:var(--gold);background:#12224A}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.pcard{display:flex;flex-direction:column;gap:4px;position:relative}
+.pcard .pn{font-family:'Shippori Mincho',serif;letter-spacing:.15em;font-size:13px;color:var(--muted)}
+.pcard.sel .pn{color:var(--gold2)}
+.pcard .pp{font-family:'Shippori Mincho',serif;font-size:19px;color:var(--text)}
+.pcard .pp small{font-size:10px;color:var(--muted);font-family:'Zen Kaku Gothic New'}
+.rec{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#0A1630;font-size:9.5px;font-weight:700;border-radius:99px;padding:1px 8px;margin-left:6px;vertical-align:2px}
+.prep{font-size:10px;color:#7A86A6}
+label{display:block;font-size:12.5px;color:var(--muted);margin:14px 0 4px}
+input{width:100%;background:#0C1A3A;border:1px solid var(--line);border-radius:8px;color:var(--text);font-family:inherit;font-size:16px;padding:12px 14px}
+input:focus{outline:none;border-color:var(--gold)}
+.sum{border:1px solid var(--gold);border-radius:10px;padding:16px 18px;margin-top:26px;background:#0C1A3A}
+.sum .sp{font-size:13px;color:var(--muted)}
+.sum .sa{font-family:'Shippori Mincho',serif;font-size:21px;color:var(--gold2);margin-top:2px}
+.gobtn{width:100%;margin-top:22px;background:linear-gradient(180deg,var(--gold2),var(--gold));color:#0A1630;border:none;border-radius:10px;padding:17px;font-family:inherit;font-size:15.5px;font-weight:700;letter-spacing:.06em;cursor:pointer}
+.gobtn:active{transform:scale(.99)}
+.err{color:#E8917D;font-size:12.5px;margin-top:10px;min-height:1.2em;text-align:center}
+.custom{border:1px dashed var(--line);border-radius:10px;padding:16px 18px;margin-top:30px;font-size:12.5px;color:var(--muted)}
+.custom a{color:var(--gold2)}
+.note{font-size:11px;color:#6B7694;margin-top:30px;line-height:1.9}
+.note b{color:#9AA5C0}
+footer{text-align:center;margin-top:36px}
+footer .fb{font-family:'Shippori Mincho',serif;letter-spacing:.4em;color:var(--gold);font-size:11px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">EXRISE FOLLOWERS</div>
+  <h1>お支払い手続き</h1>
+  <p class="lede">ご契約済みのお客様向けの、月額料金カード自動決済のお申し込み画面です。<br>決済はStripe社の安全な決済ページで行われ、カード情報が当社に保存されることはありません。</p>
+
+  <h2>1. ご契約の業種</h2>
+  <div class="inds">
+    <button data-ind="bar" onclick="selInd('bar')">飲食・接客業</button>
+    <button data-ind="idol" onclick="selInd('idol')">芸能事務所</button>
+    <button data-ind="estate" onclick="selInd('estate')">不動産業</button>
+    <button data-ind="acct" onclick="selInd('acct')">会計事務所</button>
+  </div>
+
+  <div id="plans" style="display:none">
+    <h2>2. ご契約プラン</h2>
+    <div class="cards"></div>
+  </div>
+
+  <h2>3. ご契約者情報</h2>
+  <label for="shop">店舗名・会社名(ご契約書のお名前)</label>
+  <input id="shop" type="text" placeholder="例:Nico Shisha&Bar">
+  <label for="mail">メールアドレス(領収書の送付先)</label>
+  <input id="mail" type="email" placeholder="例:info@example.com">
+
+  <div class="sum" id="sum" style="display:none">
+    <div class="sp" id="sump"></div>
+    <div class="sa" id="suma"></div>
+    <div class="sp" style="margin-top:6px">毎月の自動決済として登録されます(消費税は決済画面で加算表示されます)。</div>
+  </div>
+
+  <button class="gobtn" onclick="go()">カード情報の入力へ進む(Stripe決済ページ)</button>
+  <div class="err" id="err"></div>
+
+  <div class="custom" id="custom">
+    <b style="color:var(--gold2)">オプション込み・個別お見積り金額のお客様</b><br>
+    お見積書記載の金額でのお支払いは、担当者よりお送りする専用リンクをご利用ください。
+    <span id="customlink"></span>
+    <script>
+      if(CUSTOM_LINK){document.getElementById("customlink").innerHTML=' またはこちら:<a href="'+CUSTOM_LINK+'">個別金額でのお支払いはこちら</a>';}
+    </script>
+  </div>
+
+  <div class="note">
+    <b>お支払いについて</b>:月額料金は当月分の前払いです(初回決済日を基準に毎月自動決済)。ご契約は1ヶ月ごとの自動更新で、解約は前月末までのご連絡により翌月分から停止されます。初期費用・初月分を銀行振込でお支払い済みの場合、本登録は翌月分からの適用となります。<br>
+    <b>領収書</b>:決済完了ごとにStripeよりメールで自動送付されます。<br>
+    <b>お問い合わせ</b>:ご不明点は担当者のLINEまたは <a href="https://exrise-project.co.jp/contact/" style="color:#9AA5C0">お問い合わせフォーム</a> まで。<br>
+    販売事業者:EXRISE PROJECT/表示価格は税別です。
+  </div>
+  <footer><div class="fb">EXRISE PROJECT</div></footer>
+</div>
+</body>
+</html>
