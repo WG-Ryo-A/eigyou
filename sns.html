@@ -1,239 +1,856 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EXRISE FOLLOWERS | SNS運用代行 ― EXRISE PROJECT</title>
-<meta name="description" content="EXRISE FOLLOWERS ― LINEに素材を送るだけ。企画・撮影指示・編集・投稿・分析・改善まで丸ごと代行するSNS運用サービス。月額39,800円から。">
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
-<script>
-// ===== 設定(ここだけ差し替えればOK) =====
-const CONTACT_URL = "https://exrise-project.co.jp/contact/";
-document.addEventListener("DOMContentLoaded",()=>{
-  document.querySelectorAll("[data-contact]").forEach(a=>a.href=CONTACT_URL);
-});
-</script>
-<style>
-:root{
-  --navy:#0A1630; --navy2:#0E1E42; --navy3:#12264F; --line:#2A3A62;
-  --gold:#C9A961; --gold2:#E3C77E; --text:#F2F3F7; --muted:#9AA5C0; --amber:#E8622D;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;background:#0A1630}
-body{background:linear-gradient(160deg,#081226 0%,#0A1630 40%,#0E1E42 100%) fixed;color:var(--text);font-family:'Zen Kaku Gothic New',sans-serif;font-size:15.5px;line-height:1.85}
-.wrap{max-width:960px;margin:0 auto;padding:0 22px}
-section{padding:64px 0}
-h2{font-family:'Shippori Mincho',serif;font-size:27px;font-weight:600;text-align:center;line-height:1.5}
-h2 em{font-style:normal;color:var(--gold2)}
-.sec-en{display:block;text-align:center;font-family:'Shippori Mincho',serif;font-size:11px;letter-spacing:.45em;color:var(--gold);margin-bottom:10px}
-.sec-lede{text-align:center;color:var(--muted);font-size:14px;margin:14px auto 40px;max-width:640px}
-/* hero */
-.hero{padding:34px 0 60px;text-align:center;border-bottom:1px solid var(--line)}
-.heroimg{width:100%;height:auto;display:block;border:1px solid var(--line)}
-.hero .brand{font-family:'Shippori Mincho',serif;font-size:12px;letter-spacing:.5em;color:var(--gold)}
-.hero h1{font-family:'Shippori Mincho',serif;font-size:clamp(30px,5.4vw,46px);font-weight:700;margin:26px 0 8px;line-height:1.45}
-.hero h1 em{font-style:normal;color:var(--gold2)}
-.hero .sub{color:var(--muted);font-size:15px;max-width:620px;margin:14px auto 0}
-.hero .cta-row{margin-top:38px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-.btn{display:inline-block;padding:15px 34px;border-radius:4px;font-weight:700;font-size:15px;letter-spacing:.08em;text-decoration:none;transition:opacity .2s,transform .15s}
-.btn:active{transform:scale(.98)}
-.btn-gold{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#0A1630}
-.btn-line{border:1px solid var(--gold);color:var(--gold2);background:transparent}
-.stats{display:flex;justify-content:center;gap:0;margin-top:46px;flex-wrap:wrap}
-.stat{padding:6px 28px;border-left:1px solid var(--line);text-align:center}
-.stat:first-child{border-left:none}
-.stat b{display:block;font-family:'Shippori Mincho',serif;font-size:21px;color:var(--gold2);font-weight:600}
-.stat span{font-size:11.5px;color:var(--muted);letter-spacing:.1em}
-/* value cards */
-.cards3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
-.vcard{border:1px solid var(--gold);background:linear-gradient(180deg,#0E1E4290,#0A163090);padding:30px 24px;text-align:center}
-.vcard .num{font-family:'Shippori Mincho',serif;color:var(--gold);letter-spacing:.35em;font-size:11px}
-.vcard h3{font-family:'Shippori Mincho',serif;font-size:18px;margin:12px 0 10px;font-weight:600}
-.vcard p{font-size:13.5px;color:var(--muted)}
-/* flow */
-.flow{counter-reset:step;max-width:680px;margin:0 auto}
-.step{display:flex;gap:18px;padding:18px 0;border-bottom:1px solid var(--line)}
-.step:last-child{border-bottom:none}
-.step .no{counter-increment:step;flex-shrink:0;width:44px;height:44px;border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Shippori Mincho',serif;color:var(--gold2);font-size:16px}
-.step .no::before{content:counter(step,decimal-leading-zero)}
-.step h3{font-size:16px;font-weight:700;margin-bottom:2px}
-.step p{font-size:13.5px;color:var(--muted)}
-/* industry */
-.icards{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:16px}
-.icard{border:1px solid var(--line);background:#0C1A3A;padding:26px 22px;display:flex;flex-direction:column;transition:border-color .25s}
-.icard:hover{border-color:var(--gold)}
-.icard .en{font-family:'Shippori Mincho',serif;font-size:17px;letter-spacing:.12em;color:var(--gold2)}
-.icard .ja{font-size:12px;color:var(--muted);margin:2px 0 12px}
-.icard p{font-size:13px;color:var(--muted)}
-.icard p.trouble{color:#8E99B8;font-size:12.5px;background:#0A142E;border-left:2px solid var(--line);padding:10px 12px;margin:4px 0 10px;font-style:normal}
-.icard p:last-child{flex:1}
-.icard a{margin-top:18px;display:block;text-align:center;border:1px solid var(--gold);color:var(--gold2);text-decoration:none;font-size:13px;font-weight:700;padding:10px;border-radius:3px;letter-spacing:.08em}
-.icard a:hover{background:var(--gold);color:#0A1630}
-/* plans */
-.pcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-.pcard{border:1px solid var(--line);background:#0C1A3A;padding:24px 20px;text-align:center;position:relative}
-.pcard.reco{border-color:var(--gold)}
-.pcard.reco::after{content:"オススメ";position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:linear-gradient(180deg,var(--gold2),var(--gold));color:#0A1630;font-size:10.5px;font-weight:700;padding:2px 14px;border-radius:99px}
-.pcard .pn{font-family:'Shippori Mincho',serif;letter-spacing:.2em;font-size:13px;color:var(--muted)}
-.pcard .pp{font-family:'Shippori Mincho',serif;font-size:24px;color:var(--gold2);margin:8px 0 2px}
-.pcard .pp span{font-size:11px;color:var(--muted);font-family:'Zen Kaku Gothic New'}
-.pcard p{font-size:12px;color:var(--muted)}
-.plan-note{text-align:center;color:var(--muted);font-size:12.5px;margin-top:22px}
-/* honest */
-.honest{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;max-width:820px;margin:0 auto}
-.hbox{border:1px solid var(--line);padding:28px 26px;background:#0C1A3A}
-.hbox.ok{border-color:var(--gold)}
-.hbox h3{font-family:'Shippori Mincho',serif;font-size:17px;margin-bottom:14px;font-weight:600}
-.hbox.ok h3{color:var(--gold2)}
-.hbox li{list-style:none;font-size:13.5px;color:var(--muted);padding:7px 0 7px 20px;position:relative;border-bottom:1px dashed #22315580}
-.hbox li:last-child{border-bottom:none}
-.hbox.ok li::before{content:"◆";color:var(--gold);position:absolute;left:0;font-size:10px;top:11px}
-.hbox.ng li::before{content:"—";color:#6B7694;position:absolute;left:0}
-/* option band */
-.band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#0C1A3A66;text-align:center}
-.band .nums{display:flex;justify-content:center;gap:0;flex-wrap:wrap;margin:30px 0 10px}
-.band .n{padding:0 34px;border-left:1px solid var(--line)}
-.band .n:first-child{border-left:none}
-.band .n b{display:block;font-family:'Shippori Mincho',serif;font-size:34px;color:var(--gold2);font-weight:600}
-.band .n span{font-size:12px;color:var(--muted);letter-spacing:.12em}
-.band p{color:var(--muted);font-size:13.5px;max-width:620px;margin:8px auto 0}
-/* cta */
-.cta{text-align:center}
-.cta .box{border:1px solid var(--gold);padding:52px 28px;background:linear-gradient(180deg,#0E1E42,#0A1630)}
-.cta h2{margin-bottom:10px}
-.cta p{color:var(--muted);font-size:14px;max-width:560px;margin:0 auto 30px}
-footer{border-top:1px solid var(--line);padding:36px 0 44px;text-align:center}
-footer .fb{font-family:'Shippori Mincho',serif;letter-spacing:.5em;color:var(--gold);font-size:13px}
-footer p{color:#6B7694;font-size:11px;margin-top:12px}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="EXRISE FOLLOWERS ― LINEに素材を送るだけ。企画・撮影指示・編集・投稿・分析・改善まで丸ごと代行するSNS運用サービス。月額39,800円から。">
+  <meta name="theme-color" content="#091326">
+  <title>EXRISE FOLLOWERS | SNS運用代行 ― EXRISE PROJECT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&family=Noto+Serif+JP:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:#0b1426;
+      --ink-2:#10203a;
+      --ink-3:#162a48;
+      --paper:#f6f2e9;
+      --paper-2:#fffdf8;
+      --paper-3:#ebe4d8;
+      --gold:#c99b4b;
+      --gold-light:#f0d49b;
+      --orange:#e46635;
+      --text:#1a2432;
+      --muted:#667080;
+      --line:rgba(11,20,38,.14);
+      --white:#fff;
+      --shadow:0 20px 55px rgba(10,20,38,.12);
+      --radius:22px;
+      --wrap:1180px;
+    }
+
+    * { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; background:var(--paper); }
+    body {
+      color:var(--text);
+      background:var(--paper);
+      font-family:"Noto Sans JP",sans-serif;
+      font-size:16px;
+      line-height:1.85;
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
+    }
+    img { max-width:100%; display:block; }
+    a { color:inherit; }
+    button, a { -webkit-tap-highlight-color:transparent; }
+    .wrap { width:min(calc(100% - 44px),var(--wrap)); margin-inline:auto; }
+    .section { padding:112px 0; position:relative; }
+    .section--compact { padding:78px 0; }
+    .section--dark { background:var(--ink); color:var(--white); }
+    .section--white { background:var(--paper-2); }
+
+    .eyebrow {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      color:var(--gold);
+      font-family:"DM Sans",sans-serif;
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      margin-bottom:18px;
+    }
+    .eyebrow::before { content:""; width:38px; height:1px; background:currentColor; }
+    .section-head { max-width:760px; margin-bottom:48px; }
+    .section-head--center { text-align:center; margin-inline:auto; }
+    .section-head--center .eyebrow { justify-content:center; }
+    .section-head--center .eyebrow::after { content:""; width:38px; height:1px; background:currentColor; }
+    h1,h2,h3 { font-family:"Noto Serif JP",serif; letter-spacing:-.025em; }
+    h1 { font-size:clamp(38px,5.1vw,72px); line-height:1.24; font-weight:600; }
+    h2 { font-size:clamp(30px,3.5vw,48px); line-height:1.38; font-weight:600; }
+    h3 { font-size:22px; line-height:1.5; }
+    .lead { color:var(--muted); font-size:17px; margin-top:20px; }
+    .section--dark .lead { color:rgba(255,255,255,.62); }
+    .accent { color:var(--gold); }
+
+    .topbar {
+      position:fixed;
+      inset:0 0 auto;
+      z-index:50;
+      height:76px;
+      display:flex;
+      align-items:center;
+      background:rgba(9,19,38,.86);
+      border-bottom:1px solid rgba(255,255,255,.08);
+      backdrop-filter:blur(16px);
+      transition:height .25s ease, background .25s ease;
+    }
+    .topbar.is-scrolled { height:66px; background:rgba(9,19,38,.96); }
+    .topbar__inner { display:flex; align-items:center; justify-content:space-between; gap:28px; }
+    .logo { text-decoration:none; color:var(--white); line-height:1; }
+    .logo strong { display:block; font-family:"DM Sans",sans-serif; font-size:18px; letter-spacing:.18em; }
+    .logo span { display:block; margin-top:7px; color:var(--gold-light); font-family:"DM Sans",sans-serif; font-size:9px; letter-spacing:.28em; }
+    .nav { display:flex; align-items:center; gap:28px; margin-left:auto; }
+    .nav a { color:rgba(255,255,255,.72); text-decoration:none; font-size:13px; font-weight:600; transition:color .2s; }
+    .nav a:hover { color:var(--white); }
+    .topbar__cta {
+      display:inline-flex; align-items:center; justify-content:center;
+      min-height:44px; padding:0 20px; border-radius:999px;
+      background:var(--gold); color:var(--ink); text-decoration:none;
+      font-size:13px; font-weight:700;
+      box-shadow:0 8px 24px rgba(201,155,75,.24);
+    }
+
+    .hero {
+      position:relative;
+      min-height:790px;
+      padding:148px 0 88px;
+      background:
+        radial-gradient(circle at 78% 30%,rgba(201,155,75,.19),transparent 31%),
+        radial-gradient(circle at 62% 110%,rgba(228,102,53,.12),transparent 33%),
+        linear-gradient(135deg,#081223 0%,#0d1a31 52%,#091326 100%);
+      color:var(--white);
+      overflow:hidden;
+    }
+    .hero::before {
+      content:""; position:absolute; inset:0;
+      background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+      background-size:52px 52px;
+      mask-image:linear-gradient(to bottom,black,transparent 90%);
+    }
+    .hero::after {
+      content:""; position:absolute; width:520px; height:520px; border:1px solid rgba(201,155,75,.14); border-radius:50%; right:-190px; top:90px;
+      box-shadow:0 0 0 90px rgba(201,155,75,.025),0 0 0 180px rgba(201,155,75,.018);
+    }
+    .hero__grid { position:relative; z-index:2; display:grid; grid-template-columns:minmax(0,1.02fr) minmax(430px,.98fr); align-items:center; gap:72px; }
+    .hero__badge {
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 13px; border:1px solid rgba(240,212,155,.26); border-radius:999px;
+      color:var(--gold-light); background:rgba(255,255,255,.035);
+      font-family:"DM Sans",sans-serif; font-size:11px; font-weight:700; letter-spacing:.16em;
+      margin-bottom:25px;
+    }
+    .hero__badge::before { content:""; width:7px; height:7px; border-radius:50%; background:var(--gold); box-shadow:0 0 0 5px rgba(201,155,75,.12); }
+    .hero h1 em { color:var(--gold-light); font-style:normal; }
+    .hero__copy { max-width:650px; color:rgba(255,255,255,.68); font-size:17px; margin-top:24px; }
+    .hero__cta { display:flex; flex-wrap:wrap; gap:14px; margin-top:36px; }
+    .btn {
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      min-height:56px; padding:0 27px; border-radius:999px;
+      text-decoration:none; font-size:14px; font-weight:700; letter-spacing:.03em;
+      border:1px solid transparent; transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover { transform:translateY(-2px); }
+    .btn--primary { background:linear-gradient(135deg,var(--gold-light),var(--gold)); color:var(--ink); box-shadow:0 14px 34px rgba(201,155,75,.27); }
+    .btn--ghost { border-color:rgba(255,255,255,.24); color:var(--white); background:rgba(255,255,255,.035); }
+    .btn--dark { background:var(--ink); color:var(--white); }
+    .btn--outline { border-color:var(--line); background:transparent; color:var(--text); }
+    .btn svg { width:17px; height:17px; }
+    .hero__note { display:flex; align-items:center; gap:10px; margin-top:22px; color:rgba(255,255,255,.48); font-size:12px; }
+    .hero__note svg { width:17px; height:17px; color:var(--gold); }
+
+    .mockup { position:relative; min-height:520px; }
+    .mockup__glow { position:absolute; inset:80px 40px 30px; background:rgba(201,155,75,.14); filter:blur(48px); border-radius:50%; }
+    .dashboard {
+      position:absolute; right:0; top:66px; width:88%;
+      border:1px solid rgba(255,255,255,.12); border-radius:20px;
+      background:linear-gradient(145deg,rgba(25,43,72,.96),rgba(10,22,42,.98));
+      box-shadow:0 34px 80px rgba(0,0,0,.38); overflow:hidden;
+      transform:rotate(2deg);
+    }
+    .dashboard__bar { height:37px; display:flex; align-items:center; gap:6px; padding:0 14px; border-bottom:1px solid rgba(255,255,255,.07); }
+    .dashboard__bar i { width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.18); }
+    .dashboard__body { padding:22px; }
+    .metric-row { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+    .metric { padding:14px; border:1px solid rgba(255,255,255,.08); border-radius:12px; background:rgba(255,255,255,.025); }
+    .metric small { display:block; color:rgba(255,255,255,.42); font-size:9px; letter-spacing:.08em; }
+    .metric b { display:block; margin-top:4px; font-family:"DM Sans",sans-serif; font-size:19px; }
+    .metric span { display:block; color:#80d2a5; font-family:"DM Sans",sans-serif; font-size:9px; margin-top:2px; }
+    .chart { position:relative; height:150px; margin-top:14px; border:1px solid rgba(255,255,255,.08); border-radius:12px; overflow:hidden; background:linear-gradient(to bottom,rgba(255,255,255,.025),transparent); }
+    .chart::before { content:""; position:absolute; inset:0; background:repeating-linear-gradient(to bottom,transparent 0 36px,rgba(255,255,255,.055) 37px); }
+    .chart svg { position:absolute; inset:18px 16px; width:calc(100% - 32px); height:calc(100% - 36px); }
+    .phone {
+      position:absolute; left:2px; bottom:2px; width:190px; height:390px; z-index:3;
+      padding:8px; border-radius:34px; background:#05080e; border:1px solid rgba(255,255,255,.22);
+      box-shadow:0 32px 65px rgba(0,0,0,.46); transform:rotate(-7deg);
+    }
+    .phone::before { content:""; position:absolute; left:50%; top:11px; transform:translateX(-50%); width:66px; height:18px; border-radius:0 0 12px 12px; background:#05080e; z-index:2; }
+    .phone__screen { height:100%; overflow:hidden; border-radius:27px; background:#0e1725; }
+    .phone__head { height:54px; display:flex; align-items:flex-end; justify-content:space-between; padding:0 14px 10px; color:rgba(255,255,255,.8); font-size:9px; }
+    .phone__hero { position:relative; height:185px; background:url('top.jpg') center/cover; }
+    .phone__hero::after { content:""; position:absolute; inset:0; background:linear-gradient(to top,rgba(5,10,18,.76),transparent 50%); }
+    .phone__content { padding:13px 14px; }
+    .phone__content b { font-size:11px; }
+    .phone__content p { color:rgba(255,255,255,.54); font-size:8px; line-height:1.7; margin-top:5px; }
+    .phone__icons { display:flex; gap:14px; margin-top:12px; color:rgba(255,255,255,.68); font-size:12px; }
+    .float-card {
+      position:absolute; right:-18px; bottom:22px; z-index:4;
+      width:214px; padding:18px 19px; border:1px solid rgba(240,212,155,.25); border-radius:16px;
+      background:rgba(13,27,50,.92); box-shadow:0 22px 50px rgba(0,0,0,.34); backdrop-filter:blur(12px);
+    }
+    .float-card small { color:rgba(255,255,255,.45); font-size:9px; letter-spacing:.1em; }
+    .float-card strong { display:block; color:var(--gold-light); font-family:"Noto Serif JP",serif; font-size:18px; margin-top:4px; }
+    .float-card p { color:rgba(255,255,255,.56); font-size:10px; line-height:1.6; margin-top:6px; }
+
+    .proof {
+      position:relative; z-index:3; margin-top:70px;
+      display:grid; grid-template-columns:repeat(4,1fr);
+      border:1px solid rgba(255,255,255,.11); border-radius:18px; overflow:hidden;
+      background:rgba(255,255,255,.035); backdrop-filter:blur(8px);
+    }
+    .proof__item { padding:22px 24px; border-left:1px solid rgba(255,255,255,.09); }
+    .proof__item:first-child { border-left:0; }
+    .proof__item strong { display:block; color:var(--gold-light); font-family:"Noto Serif JP",serif; font-size:22px; }
+    .proof__item span { display:block; color:rgba(255,255,255,.47); font-size:11px; margin-top:4px; }
+
+    .value-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+    .value-card {
+      position:relative; min-height:330px; padding:34px 30px;
+      border:1px solid var(--line); border-radius:var(--radius); background:var(--paper-2);
+      box-shadow:0 10px 30px rgba(11,20,38,.05); overflow:hidden;
+      transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+    .value-card:hover { transform:translateY(-6px); box-shadow:var(--shadow); border-color:rgba(201,155,75,.4); }
+    .value-card__no { color:rgba(11,20,38,.08); font-family:"DM Sans",sans-serif; font-size:70px; font-weight:700; line-height:1; position:absolute; right:20px; top:14px; }
+    .icon-box { width:54px; height:54px; display:grid; place-items:center; border-radius:15px; background:rgba(201,155,75,.13); color:#9a6a22; margin-bottom:48px; }
+    .icon-box svg { width:26px; height:26px; }
+    .value-card p { color:var(--muted); font-size:14px; margin-top:15px; }
+
+    .case-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:24px; }
+    .case-card {
+      background:var(--paper-2); border:1px solid var(--line); border-radius:var(--radius); padding:30px;
+      box-shadow:0 10px 28px rgba(11,20,38,.045);
+    }
+    .case-card__top { display:flex; justify-content:space-between; gap:20px; align-items:flex-start; }
+    .case-card__label { color:var(--orange); font-size:12px; font-weight:700; letter-spacing:.1em; }
+    .case-card__who { color:var(--muted); font-size:12px; margin-top:3px; }
+    .case-card__icon { width:44px; height:44px; border-radius:13px; display:grid; place-items:center; background:var(--ink); color:var(--gold-light); flex:0 0 auto; }
+    .case-card__icon svg { width:22px; height:22px; }
+    .before { margin-top:24px; padding:17px 18px; background:#eee9df; border-left:3px solid #aaa191; border-radius:0 12px 12px 0; color:#545b66; font-size:13px; }
+    .after { display:grid; grid-template-columns:30px 1fr; gap:12px; margin-top:18px; color:var(--text); font-size:14px; }
+    .after__arrow { width:30px; height:30px; border-radius:50%; display:grid; place-items:center; background:rgba(201,155,75,.16); color:#97671c; font-weight:700; }
+    .case-note { color:#857e73; font-size:11px; text-align:center; margin-top:24px; }
+    .case-cta { text-align:center; margin-top:34px; }
+
+    .price-intro { display:grid; grid-template-columns:.9fr 1.1fr; gap:80px; align-items:end; margin-bottom:44px; }
+    .price-intro .lead { margin-top:0; }
+    .price-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; align-items:stretch; }
+    .price-card {
+      position:relative; display:flex; flex-direction:column; min-height:330px; padding:28px 24px;
+      border:1px solid rgba(255,255,255,.12); border-radius:18px; background:rgba(255,255,255,.035);
+    }
+    .price-card--featured { border-color:var(--gold); background:linear-gradient(180deg,rgba(201,155,75,.17),rgba(255,255,255,.04)); transform:translateY(-10px); box-shadow:0 24px 50px rgba(0,0,0,.2); }
+    .price-card__tag { position:absolute; top:-13px; left:50%; transform:translateX(-50%); padding:5px 13px; border-radius:999px; background:var(--gold); color:var(--ink); font-size:10px; font-weight:700; white-space:nowrap; }
+    .price-card__name { color:var(--gold-light); font-family:"DM Sans",sans-serif; font-size:12px; font-weight:700; letter-spacing:.17em; }
+    .price-card__price { margin-top:20px; font-family:"DM Sans",sans-serif; font-size:34px; font-weight:700; letter-spacing:-.04em; }
+    .price-card__price span { color:rgba(255,255,255,.5); font-size:12px; font-weight:400; margin-left:3px; }
+    .price-card p { color:rgba(255,255,255,.58); font-size:13px; margin-top:18px; }
+    .price-card__line { width:100%; height:1px; background:rgba(255,255,255,.1); margin:22px 0 18px; }
+    .price-card__mini { margin-top:auto; color:rgba(255,255,255,.4); font-size:11px; }
+    .price-note { color:rgba(255,255,255,.42); font-size:11px; text-align:center; margin-top:26px; }
+
+    .option-band {
+      background:linear-gradient(135deg,#e9dfcd,#f7f2e8);
+      border-top:1px solid rgba(11,20,38,.08); border-bottom:1px solid rgba(11,20,38,.08);
+    }
+    .option-grid { display:grid; grid-template-columns:1.15fr .85fr; gap:76px; align-items:center; }
+    .option-nums { display:grid; grid-template-columns:repeat(3,1fr); border:1px solid var(--line); border-radius:18px; background:rgba(255,255,255,.52); overflow:hidden; }
+    .option-num { padding:28px 14px; text-align:center; border-left:1px solid var(--line); }
+    .option-num:first-child { border-left:0; }
+    .option-num strong { display:block; color:var(--ink); font-family:"DM Sans",sans-serif; font-size:38px; line-height:1; }
+    .option-num strong span { font-size:15px; }
+    .option-num small { display:block; color:var(--muted); font-size:10px; margin-top:9px; }
+
+    .promise-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:24px; }
+    .promise-card { border:1px solid var(--line); border-radius:var(--radius); padding:34px; background:var(--paper-2); }
+    .promise-card--yes { border-top:4px solid var(--gold); }
+    .promise-card--no { border-top:4px solid #778090; }
+    .promise-card__head { display:flex; align-items:center; gap:12px; }
+    .promise-card__mark { width:36px; height:36px; border-radius:50%; display:grid; place-items:center; background:rgba(201,155,75,.14); color:#97671c; font-weight:700; }
+    .promise-card--no .promise-card__mark { background:rgba(102,112,128,.13); color:#69717d; }
+    .promise-list { list-style:none; margin-top:24px; }
+    .promise-list li { position:relative; padding:14px 0 14px 29px; border-top:1px solid var(--line); font-size:14px; }
+    .promise-list li::before { content:""; position:absolute; left:1px; top:24px; width:8px; height:8px; border-radius:50%; background:var(--gold); }
+    .promise-card--no .promise-list li::before { background:#8d96a4; }
+
+    .flow-list { display:grid; grid-template-columns:repeat(5,1fr); gap:0; margin-top:56px; }
+    .flow-step { position:relative; padding-right:25px; }
+    .flow-step:not(:last-child)::after { content:""; position:absolute; top:25px; right:4px; width:20px; height:1px; background:rgba(255,255,255,.24); }
+    .flow-step__no { width:50px; height:50px; border:1px solid rgba(240,212,155,.55); border-radius:50%; display:grid; place-items:center; color:var(--gold-light); font-family:"DM Sans",sans-serif; font-size:12px; }
+    .flow-step h3 { font-family:"Noto Sans JP",sans-serif; font-size:15px; margin-top:20px; }
+    .flow-step p { color:rgba(255,255,255,.52); font-size:12px; line-height:1.75; margin-top:9px; }
+
+    .vision-card {
+      position:relative; border-radius:28px; overflow:hidden; min-height:520px;
+      background:#081223; box-shadow:var(--shadow);
+    }
+    .vision-card img { width:100%; height:100%; min-height:520px; object-fit:cover; }
+    .vision-card::after { content:""; position:absolute; inset:0; box-shadow:inset 0 0 0 1px rgba(255,255,255,.12); border-radius:inherit; pointer-events:none; }
+    .vision-note { color:var(--muted); font-size:11px; margin-top:13px; text-align:right; }
+
+    .cta-section { padding:112px 0; background:var(--paper-2); }
+    .cta-box {
+      position:relative; overflow:hidden; display:grid; grid-template-columns:1fr auto; gap:50px; align-items:center;
+      padding:58px 62px; border-radius:28px;
+      background:linear-gradient(135deg,#0a1528,#142845); color:var(--white); box-shadow:0 26px 70px rgba(9,19,38,.2);
+    }
+    .cta-box::before { content:""; position:absolute; width:310px; height:310px; border-radius:50%; background:rgba(201,155,75,.15); filter:blur(22px); right:-90px; top:-150px; }
+    .cta-box__content { position:relative; z-index:1; max-width:690px; }
+    .cta-box h2 { font-size:clamp(29px,3.4vw,46px); }
+    .cta-box p { color:rgba(255,255,255,.62); font-size:14px; margin-top:17px; }
+    .cta-box__actions { position:relative; z-index:1; display:flex; flex-direction:column; gap:12px; min-width:250px; }
+    .cta-box__actions .btn { width:100%; }
+
+    footer { background:#070f1e; color:rgba(255,255,255,.55); padding:42px 0 96px; }
+    .footer-inner { display:flex; justify-content:space-between; gap:30px; align-items:flex-end; }
+    .footer-brand strong { display:block; color:var(--white); font-family:"DM Sans",sans-serif; font-size:17px; letter-spacing:.2em; }
+    .footer-brand span { display:block; color:var(--gold-light); font-family:"DM Sans",sans-serif; font-size:9px; letter-spacing:.25em; margin-top:8px; }
+    footer p { max-width:660px; font-size:10px; line-height:1.8; text-align:right; }
+
+    .mobile-cta { display:none; }
+    .reveal { opacity:0; transform:translateY(22px); transition:opacity .65s ease,transform .65s ease; }
+    .reveal.is-visible { opacity:1; transform:none; }
+
+    @media (max-width:1020px) {
+      .nav { display:none; }
+      .hero { min-height:auto; }
+      .hero__grid { grid-template-columns:1fr; gap:28px; }
+      .hero__content { max-width:760px; }
+      .mockup { min-height:500px; max-width:620px; width:100%; margin:0 auto; }
+      .proof { margin-top:44px; }
+      .value-grid { grid-template-columns:1fr; }
+      .value-card { min-height:auto; }
+      .icon-box { margin-bottom:30px; }
+      .price-intro { grid-template-columns:1fr; gap:22px; }
+      .price-grid { grid-template-columns:repeat(2,1fr); gap:18px; }
+      .price-card--featured { transform:none; }
+      .option-grid { grid-template-columns:1fr; gap:40px; }
+      .flow-list { grid-template-columns:repeat(3,1fr); gap:36px 12px; }
+      .flow-step:not(:last-child)::after { display:none; }
+      .cta-box { grid-template-columns:1fr; }
+      .cta-box__actions { flex-direction:row; min-width:0; }
+    }
+
+    @media (max-width:720px) {
+      body { font-size:15px; }
+      .wrap { width:min(calc(100% - 30px),var(--wrap)); }
+      .section { padding:78px 0; }
+      .section--compact { padding:62px 0; }
+      .topbar { height:64px; }
+      .topbar__cta { display:none; }
+      .logo strong { font-size:15px; }
+      .hero { padding:112px 0 58px; }
+      .hero__grid { gap:22px; }
+      .hero__copy { font-size:14px; line-height:1.9; }
+      .hero__cta { display:grid; grid-template-columns:1fr; }
+      .btn { width:100%; min-height:54px; }
+      .mockup { min-height:405px; margin-top:10px; }
+      .dashboard { width:92%; top:30px; }
+      .dashboard__body { padding:14px; }
+      .metric { padding:10px; }
+      .metric b { font-size:14px; }
+      .chart { height:110px; }
+      .phone { width:145px; height:300px; border-radius:27px; }
+      .phone__screen { border-radius:21px; }
+      .phone__head { height:43px; }
+      .phone__hero { height:138px; }
+      .float-card { width:170px; right:-2px; bottom:5px; padding:14px; }
+      .float-card strong { font-size:14px; }
+      .proof { grid-template-columns:repeat(2,1fr); }
+      .proof__item { border-top:1px solid rgba(255,255,255,.09); padding:18px; }
+      .proof__item:nth-child(-n+2) { border-top:0; }
+      .proof__item:nth-child(3) { border-left:0; }
+      .proof__item strong { font-size:18px; }
+      .section-head { margin-bottom:34px; }
+      .lead { font-size:14px; }
+      .case-grid,.promise-grid,.price-grid { grid-template-columns:1fr; }
+      .case-card,.promise-card { padding:25px 22px; }
+      .option-nums { grid-template-columns:1fr; }
+      .option-num { border-left:0; border-top:1px solid var(--line); }
+      .option-num:first-child { border-top:0; }
+      .flow-list { grid-template-columns:1fr; gap:0; margin-top:36px; }
+      .flow-step { display:grid; grid-template-columns:50px 1fr; column-gap:18px; padding:0 0 28px; }
+      .flow-step__no { grid-row:1 / span 2; }
+      .flow-step h3 { margin-top:2px; }
+      .flow-step p { margin-top:6px; }
+      .vision-card,.vision-card img { min-height:0; }
+      .vision-card img { aspect-ratio:1.52/1; }
+      .cta-section { padding:78px 0 100px; }
+      .cta-box { padding:38px 24px; border-radius:22px; }
+      .cta-box__actions { flex-direction:column; }
+      .footer-inner { display:block; }
+      footer p { text-align:left; margin-top:22px; }
+      .mobile-cta {
+        display:grid; grid-template-columns:.9fr 1.1fr; gap:8px;
+        position:fixed; z-index:60; left:0; right:0; bottom:0; padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+        background:rgba(7,15,30,.95); border-top:1px solid rgba(255,255,255,.1); backdrop-filter:blur(14px);
+      }
+      .mobile-cta a { display:flex; align-items:center; justify-content:center; height:46px; border-radius:999px; text-decoration:none; font-size:12px; font-weight:700; }
+      .mobile-cta__sub { color:var(--white); border:1px solid rgba(255,255,255,.22); }
+      .mobile-cta__main { color:var(--ink); background:var(--gold); }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      html { scroll-behavior:auto; }
+      *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+      .reveal { opacity:1; transform:none; }
+    }
+
+
+
+    /* Responsive cinematic first view */
+    .sr-only {
+      position:absolute !important; width:1px !important; height:1px !important;
+      padding:0 !important; margin:-1px !important; overflow:hidden !important;
+      clip:rect(0,0,0,0) !important; white-space:nowrap !important; border:0 !important;
+    }
+    .hero.hero--full {
+      position:relative;
+      height:100svh;
+      min-height:560px;
+      padding:0;
+      background:#061225;
+      overflow:hidden;
+      isolation:isolate;
+    }
+    .hero.hero--full::before,
+    .hero.hero--full::after { display:none; }
+    .hero-full__art { position:absolute; inset:0; z-index:0; background:#061225; overflow:hidden; }
+    .hero-full__backdrop,
+    .hero-full__picture { position:absolute; inset:0; display:block; }
+    .hero-full__backdrop img,
+    .hero-full__picture img { width:100%; height:100%; max-width:none; }
+    .hero-full__backdrop img {
+      object-fit:cover;
+      object-position:center;
+      filter:blur(24px) brightness(.44) saturate(.84);
+      transform:scale(1.07);
+      opacity:.82;
+    }
+    .hero-full__picture img { object-fit:contain; object-position:center; }
+    .hero-full__shade { display:none; }
+    .hero-full__mobile { display:none; }
+    .proof-band { background:#071224; padding:22px 0 28px; }
+    .proof-band .proof { margin-top:0; }
+
+    /* The key visual already carries the brand. Navigation enters only after the first scroll. */
+    @media (min-width:1021px) {
+      .topbar {
+        inset:18px auto auto 50%;
+        width:min(calc(100% - 36px),1180px);
+        height:60px;
+        border:1px solid rgba(255,255,255,.11);
+        border-radius:999px;
+        background:rgba(7,17,34,.9);
+        box-shadow:0 18px 50px rgba(0,0,0,.25);
+        transform:translate(-50%,-145%);
+        opacity:0;
+        pointer-events:none;
+        transition:transform .32s ease,opacity .25s ease,background .25s ease;
+      }
+      .topbar.is-scrolled {
+        height:60px;
+        background:rgba(7,17,34,.94);
+        transform:translate(-50%,0);
+        opacity:1;
+        pointer-events:auto;
+      }
+      .topbar__inner {
+        width:100%;
+        margin:0;
+        padding:0 10px 0 20px;
+      }
+      .logo strong { font-size:15px; }
+      .logo span { margin-top:5px; font-size:8px; }
+      .nav { gap:24px; }
+      .topbar__cta { min-height:42px; }
+    }
+
+    @media (max-width:1020px) {
+      .topbar,
+      .topbar.is-scrolled {
+        inset:0 0 auto;
+        width:100%;
+        height:64px;
+        border-radius:0;
+        transform:none;
+        opacity:1;
+        pointer-events:auto;
+        background:rgba(9,19,38,.94);
+        box-shadow:none;
+      }
+      .topbar__inner { width:min(calc(100% - 44px),var(--wrap)); margin-inline:auto; padding:0; }
+      .hero.hero--full {
+        min-height:760px;
+        height:auto;
+        padding:112px 0 58px;
+        display:flex;
+        align-items:flex-end;
+      }
+      .hero-full__backdrop img {
+        object-position:74% center;
+        filter:blur(18px) brightness(.34) saturate(.74);
+        opacity:.78;
+      }
+      .hero-full__picture img {
+        object-fit:cover;
+        object-position:74% center;
+        opacity:.58;
+      }
+      .hero-full__shade {
+        display:block;
+        position:absolute; inset:0; z-index:1; pointer-events:none;
+        background:
+          linear-gradient(90deg,rgba(3,12,28,.98) 0%,rgba(3,12,28,.88) 50%,rgba(3,12,28,.34) 100%),
+          linear-gradient(180deg,rgba(3,12,28,.12),rgba(3,12,28,.5));
+      }
+      .hero-full__mobile {
+        display:block;
+        position:relative;
+        z-index:2;
+        width:min(calc(100% - 44px),760px);
+        margin-inline:auto;
+      }
+      .hero-full__brand {
+        color:var(--gold-light);
+        font-family:"DM Sans",sans-serif;
+        font-size:13px;
+        font-weight:600;
+        letter-spacing:.22em;
+        margin-bottom:18px;
+      }
+      .hero-full__mobile h1 {
+        max-width:650px;
+        font-size:clamp(40px,7vw,68px);
+        line-height:1.32;
+      }
+      .hero-full__mobile p {
+        max-width:600px;
+        margin-top:22px;
+        color:rgba(255,255,255,.76);
+        font-size:16px;
+        line-height:1.95;
+      }
+      .hero-full__mobile .hero__cta { margin-top:32px; }
+    }
+
+    @media (max-width:720px) {
+      .topbar__inner { width:min(calc(100% - 30px),var(--wrap)); }
+      .hero.hero--full { min-height:700px; padding:104px 0 42px; }
+      .hero-full__backdrop img { object-position:72% center; }
+      .hero-full__picture img { object-position:72% center; opacity:.5; }
+      .hero-full__shade {
+        background:
+          linear-gradient(90deg,rgba(3,12,28,.99) 0%,rgba(3,12,28,.9) 64%,rgba(3,12,28,.38) 100%),
+          linear-gradient(180deg,rgba(3,12,28,.15),rgba(3,12,28,.62));
+      }
+      .hero-full__mobile { width:min(calc(100% - 30px),760px); }
+      .hero-full__brand { font-size:11px; margin-bottom:14px; }
+      .hero-full__mobile h1 { font-size:clamp(34px,10.5vw,50px); }
+      .hero-full__mobile p { font-size:14px; margin-top:18px; }
+      .proof-band { padding:14px 0 20px; }
+      .proof-band .proof { margin-top:0; }
+    }
+
+  </style>
 </head>
 <body>
+  <header class="topbar" id="topbar">
+    <div class="wrap topbar__inner">
+      <a class="logo" href="#top" aria-label="EXRISE FOLLOWERS トップへ">
+        <strong>EXRISE FOLLOWERS</strong>
+        <span>BY EXRISE PROJECT</span>
+      </a>
+      <nav class="nav" aria-label="ページ内ナビゲーション">
+        <a href="#value">提供価値</a>
+        <a href="#case">活用例</a>
+        <a href="#price">料金</a>
+        <a href="#flow">導入の流れ</a>
+      </nav>
+      <a class="topbar__cta" data-contact href="https://exrise-project.co.jp/contact/">無料SNS診断</a>
+    </div>
+  </header>
 
-<header class="hero"><div class="wrap">
-  <img class="heroimg" src="top.jpg" alt="EXRISE FOLLOWERS by EXRISE PROJECT ― 集める。魅せる。伸ばしていく。SNS運用を、丸ごと。">
-  <p class="sub">LINEに素材を送るだけ。企画・撮影指示・編集・投稿・分析・翌月の改善提案まで、専門チームがすべて代行します。飲食・接客業から、芸能事務所・不動産業・会計事務所まで。</p>
-  <div class="cta-row">
-    <a class="btn btn-gold" data-contact href="#">無料SNS診断を申し込む</a>
-    <a class="btn btn-line" href="#contact">お見積もりはこちら</a>
+  <main>
+    <section class="hero hero--full" id="top">
+      <h1 class="sr-only">EXRISE FOLLOWERS｜SNS運用を、丸ごと。企画・撮影指示・編集・投稿・分析・改善まで。</h1>
+      <div class="hero-full__art" aria-hidden="true">
+        <picture class="hero-full__backdrop">
+          <source media="(min-width:1021px)" srcset="hero_wide.jpg">
+          <img src="hero_tall.jpg" alt="">
+        </picture>
+        <picture class="hero-full__picture">
+          <source media="(min-width:1021px)" srcset="hero_wide.jpg">
+          <img src="hero_tall.jpg" alt="">
+        </picture>
+      </div>
+      <div class="hero-full__shade" aria-hidden="true"></div>
+      <div class="hero-full__mobile">
+        <div class="hero-full__brand">EXRISE FOLLOWERS</div>
+        <h1>集める。魅せる。<br>伸ばしていく。</h1>
+        <p>SNS運用を、丸ごと。企画・撮影指示・編集・投稿・分析・改善まで。LINEに素材を送るだけで、すべてお任せ。</p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" data-contact href="https://exrise-project.co.jp/contact/">
+            無料SNS診断を申し込む
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn--ghost" href="#price">料金プランを見る</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="proof-band">
+      <div class="wrap">
+        <div class="proof reveal">
+          <div class="proof__item"><strong>¥39,800〜</strong><span>月額・税別</span></div>
+          <div class="proof__item"><strong>縛りなし</strong><span>1か月ごとの自動更新</span></div>
+          <div class="proof__item"><strong>全件確認</strong><span>公開前に貴社チェック</span></div>
+          <div class="proof__item"><strong>48時間</strong><span>無料診断のお届け</span></div>
+        </div>
+      </div>
+    </div>
+
+    <section class="section" id="value">
+      <div class="wrap">
+        <div class="section-head section-head--center reveal">
+          <div class="eyebrow">VALUE</div>
+          <h2>発信を止めず、<br><span class="accent">選ばれる理由</span>を積み上げる。</h2>
+          <p class="lead">SNSは24時間働く営業接点です。投稿作業の代行ではなく、事業導線として機能する状態を維持します。</p>
+        </div>
+        <div class="value-grid">
+          <article class="value-card reveal">
+            <div class="value-card__no">01</div>
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s8-4 8-11V5l-8-3-8 3v5c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-5"/></svg></div>
+            <h3>機会損失をなくす</h3>
+            <p>「今日営業しているか分からない」「どんな会社か分からない」。選ぶ直前の離脱を防ぎ、判断材料を整えます。</p>
+          </article>
+          <article class="value-card reveal">
+            <div class="value-card__no">02</div>
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/><path d="m4 7 6-4 6 5 6-4"/></svg></div>
+            <h3>数字から改善する</h3>
+            <p>投稿反応を毎月確認し、次に撮る素材と打ち出す情報を更新。やりっぱなしにせず、仮説と改善を回します。</p>
+          </article>
+          <article class="value-card reveal">
+            <div class="value-card__no">03</div>
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></div>
+            <h3>魅力を資産化する</h3>
+            <p>空気感、人柄、こだわりを継続的に可視化。集客だけでなく、採用や指名につながるブランド蓄積を作ります。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--white" id="case">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="eyebrow">USE CASE</div>
+          <h2>業種ごとに、<br>運用の型を<span class="accent">ゼロから設計</span>。</h2>
+          <p class="lead">業種、商圏、現場負荷、炎上リスクに合わせて、発信頻度とコンテンツの役割を組み替えます。</p>
+        </div>
+        <div class="case-grid">
+          <article class="case-card reveal">
+            <div class="case-card__top">
+              <div><div class="case-card__label">飲食・接客業</div><div class="case-card__who">歌舞伎町のシーシャバーの場合</div></div>
+              <div class="case-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3v18M19 3v18M5 8h14M5 16h14"/></svg></div>
+            </div>
+            <div class="before">最終投稿が2か月前。「今日やっているか分からない店」として深夜の検索客に素通りされていた。</div>
+            <div class="after"><div class="after__arrow">→</div><p>毎日の営業ストーリーズと週2本の店内投稿へ。マスターはLINEに写真を送るだけ、週10分。</p></div>
+          </article>
+          <article class="case-card reveal">
+            <div class="case-card__top">
+              <div><div class="case-card__label">芸能事務所</div><div class="case-card__who">結成1年のアイドルグループの場合</div></div>
+              <div class="case-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 18V6l11-2v12"/><circle cx="5" cy="18" r="3"/><circle cx="16" cy="16" r="3"/></svg></div>
+            </div>
+            <div class="before">公式アカウントが告知掲示板化。個人アカウントもルールがなく、発信の統制が取れていなかった。</div>
+            <div class="after"><div class="after__arrow">→</div><p>切り抜きリールと日常投稿へ再設計。個人アカにはガイドラインを整備し、イベントから逆算して発信。</p></div>
+          </article>
+          <article class="case-card reveal">
+            <div class="case-card__top">
+              <div><div class="case-card__label">不動産業</div><div class="case-card__who">駅前の不動産会社の場合</div></div>
+              <div class="case-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10M9 20v-6h6v6"/></svg></div>
+            </div>
+            <div class="before">ポータル掲載費が上昇する一方、反響は減少。自社で蓄積できる集客導線がなかった。</div>
+            <div class="after"><div class="after__arrow">→</div><p>内見時に10秒×4カットを撮影し、ルームツアー化。LINE登録につながる自社導線を構築。</p></div>
+          </article>
+          <article class="case-card reveal">
+            <div class="case-card__top">
+              <div><div class="case-card__label">会計事務所</div><div class="case-card__who">経理代行会社の代表の場合</div></div>
+              <div class="case-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 3h16v18H4z"/><path d="M8 7h8M8 11h2M14 11h2M8 15h2M14 15h2"/></svg></div>
+            </div>
+            <div class="before">集客が紹介頼み。発信すべきことは分かっていても、代表本人に執筆時間がなかった。</div>
+            <div class="after"><div class="after__arrow">→</div><p>月1回60分の取材からX週5本、note月2本を代行。代表の実働は月90分に限定。</p></div>
+          </article>
+        </div>
+        <p class="case-note">※上記は実在の事例ではなく、ご提供内容をイメージいただくための架空の例です。</p>
+        <div class="case-cta reveal"><a class="btn btn--dark" data-contact href="https://exrise-project.co.jp/contact/">自社の場合の見積もりを依頼する</a></div>
+      </div>
+    </section>
+
+    <section class="section section--dark" id="price">
+      <div class="wrap">
+        <div class="price-intro reveal">
+          <div>
+            <div class="eyebrow">PRICE</div>
+            <h2>月額<span class="accent">39,800円</span>から。<br>必要な機能だけを積み上げる。</h2>
+          </div>
+          <p class="lead">4つの基本プランに、月額オプション約30種・単発オプション約40種を組み合わせます。下記はバー業態の例です。</p>
+        </div>
+        <div class="price-grid">
+          <article class="price-card reveal">
+            <div class="price-card__name">BASE</div>
+            <div class="price-card__price">¥39,800<span>/月</span></div>
+            <div class="price-card__line"></div>
+            <p>まず発信を止めないための最小構成。必要な業務を単品で追加できます。</p>
+            <div class="price-card__mini">発信基盤を作るプラン</div>
+          </article>
+          <article class="price-card reveal">
+            <div class="price-card__name">ENTRY</div>
+            <div class="price-card__price">¥59,800<span>/月</span></div>
+            <div class="price-card__line"></div>
+            <p>運用負荷を限定しながら、投稿制作と継続更新を外部化する導入プラン。</p>
+            <div class="price-card__mini">社内負荷を抑えるプラン</div>
+          </article>
+          <article class="price-card price-card--featured reveal">
+            <div class="price-card__tag">推奨プラン</div>
+            <div class="price-card__name">STANDARD</div>
+            <div class="price-card__price">¥98,000<span>/月</span></div>
+            <div class="price-card__line"></div>
+            <p>投稿、ストーリーズ、リール、分析レポートまでを含むフル運用。</p>
+            <div class="price-card__mini">運用と改善を一体化</div>
+          </article>
+          <article class="price-card reveal">
+            <div class="price-card__name">PREMIUM</div>
+            <div class="price-card__price">¥158,000<span>/月</span></div>
+            <div class="price-card__line"></div>
+            <p>改善ミーティング、採用告知までを含め、事業側の施策と接続します。</p>
+            <div class="price-card__mini">事業成長まで伴走</div>
+          </article>
+        </div>
+        <p class="price-note">別途初期費用（初月のみ）。表示価格はすべて税別です。契約は1か月ごとの自動更新で、縛りはありません。</p>
+      </div>
+    </section>
+
+    <section class="section section--compact option-band">
+      <div class="wrap option-grid">
+        <div class="reveal">
+          <div class="eyebrow">OPTIONS</div>
+          <h2>「これもできる？」に、<br><span class="accent">ほぼ全部</span>応える。</h2>
+          <p class="lead">TikTok・YouTube Shorts、多言語対応、LINE・CRM、Googleマップ、採用支援、イベント実況、プロ撮影まで。必要な分だけ追加できます。</p>
+        </div>
+        <div class="option-nums reveal">
+          <div class="option-num"><strong>30<span>種+</span></strong><small>月額オプション</small></div>
+          <div class="option-num"><strong>40<span>種+</span></strong><small>単発オプション</small></div>
+          <div class="option-num"><strong>7<span>種</span></strong><small>プロ撮影メニュー</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="promise">
+      <div class="wrap">
+        <div class="section-head section-head--center reveal">
+          <div class="eyebrow">PROMISE</div>
+          <h2>約束すること、<br>あえて<span class="accent">約束しないこと</span>。</h2>
+          <p class="lead">守れない成果保証ではなく、運用品質と改善プロセスを明確にします。</p>
+        </div>
+        <div class="promise-grid">
+          <article class="promise-card promise-card--yes reveal">
+            <div class="promise-card__head"><div class="promise-card__mark">✓</div><h3>約束すること</h3></div>
+            <ul class="promise-list">
+              <li>素材が少ない月も、発信を止めずに運用を継続する</li>
+              <li>全投稿を公開前に確認し、掲載事故を仕組みで防ぐ</li>
+              <li>数字と翌月の改善案をセットで毎月報告する</li>
+              <li>下がった数字も隠さず、仮説と対策を共有する</li>
+            </ul>
+          </article>
+          <article class="promise-card promise-card--no reveal">
+            <div class="promise-card__head"><div class="promise-card__mark">—</div><h3>約束しないこと</h3></div>
+            <ul class="promise-list">
+              <li>フォロワー数、来店数、成約数、応募数の保証</li>
+              <li>深夜や即時の対応</li>
+              <li>DM・コメントへの無制限な全件返信</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--dark" id="flow">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="eyebrow">FLOW</div>
+          <h2>導入後に必要なのは、<br><span class="accent">素材を送ること</span>だけ。</h2>
+          <p class="lead">初期設計から公開前確認、月次改善まで、運用を止めない標準フローを用意しています。</p>
+        </div>
+        <div class="flow-list">
+          <article class="flow-step reveal"><div class="flow-step__no">01</div><h3>無料SNS診断</h3><p>現状の機会損失をA4一枚に整理。48時間以内に共有します。</p></article>
+          <article class="flow-step reveal"><div class="flow-step__no">02</div><h3>ヒアリング・初期設計</h3><p>強み、NG事項、投稿トーン、導線を約15分で確認します。</p></article>
+          <article class="flow-step reveal"><div class="flow-step__no">03</div><h3>LINEに素材を送付</h3><p>週2〜3枚のスマホ写真で対応。撮る内容はこちらから指示します。</p></article>
+          <article class="flow-step reveal"><div class="flow-step__no">04</div><h3>確認後に公開</h3><p>すべての投稿を事前確認。承認されたものだけ公開します。</p></article>
+          <article class="flow-step reveal"><div class="flow-step__no">05</div><h3>数字と次の一手</h3><p>月次レポートと改善案で、翌月の運用計画を更新します。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="vision-card reveal"><img src="vision.jpg" alt="EXRISEの思想とFOLLOWERSのサービス全体像"></div>
+        <p class="vision-note">※画面・数値はサービスイメージです。</p>
+      </div>
+    </section>
+
+    <section class="cta-section" id="contact">
+      <div class="wrap">
+        <div class="cta-box reveal">
+          <div class="cta-box__content">
+            <div class="eyebrow">FREE DIAGNOSIS</div>
+            <h2>まずは、無料診断から。</h2>
+            <p>売り込みは、診断を見ていただいてからで結構です。「今、何が機会損失になっているか」を一枚にしてお渡しします。</p>
+          </div>
+          <div class="cta-box__actions">
+            <a class="btn btn--primary" data-contact href="https://exrise-project.co.jp/contact/">無料SNS診断を申し込む</a>
+            <a class="btn btn--ghost" data-contact href="https://exrise-project.co.jp/contact/">見積もりを依頼する</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <div class="footer-brand"><strong>EXRISE FOLLOWERS</strong><span>BY EXRISE PROJECT</span></div>
+      <p>EXRISE FOLLOWERS ― SNS運用代行 / 表示価格はすべて税別です。成果（フォロワー数・来店数・成約数等）を保証するものではありません。</p>
+    </div>
+  </footer>
+
+  <div class="mobile-cta" aria-label="お問い合わせ">
+    <a class="mobile-cta__sub" href="#price">料金を見る</a>
+    <a class="mobile-cta__main" data-contact href="https://exrise-project.co.jp/contact/">無料SNS診断</a>
   </div>
-  <div class="stats">
-    <div class="stat"><b>¥39,800<span style="font-size:12px">〜/月</span></b><span>月額(税別)</span></div>
-    <div class="stat"><b>縛りなし</b><span>1ヶ月ごとの自動更新</span></div>
-    <div class="stat"><b>全件確認</b><span>公開前に貴社チェック</span></div>
-    <div class="stat"><b>48時間</b><span>無料診断のお届け</span></div>
-  </div>
-</div></header>
 
-<section><div class="wrap">
-  <span class="sec-en">VALUE</span>
-  <h2>私たちが提供する<em>3つの価値</em></h2>
-  <p class="sec-lede">SNSは、あなたの商売にとって24時間働く「営業マン」です。私たちはその営業マンを、最高の状態で働かせ続けます。</p>
-  <div class="cards3">
-    <div class="vcard"><div class="num">0 1</div><h3>機会損失をなくす</h3><p>「今日やっているか分からない」「どんな会社か分からない」——お客様が選ぶ直前の離脱を防ぎ、選ばれる導線を整えます。</p></div>
-    <div class="vcard"><div class="num">0 2</div><h3>反応を分析し、改善を続ける</h3><p>投稿の反応をデータで把握。次に撮るべき素材・打ち出すべき情報を毎月ご提案します。やりっぱなしにしません。</p></div>
-    <div class="vcard"><div class="num">0 3</div><h3>魅力を、積み上げる</h3><p>空気感・人柄・こだわりが伝わる投稿を継続することで、集客だけでなく自然な採用応募にもつながります。</p></div>
-  </div>
-</div></section>
+  <script>
+    const CONTACT_URL = "https://exrise-project.co.jp/contact/";
+    document.querySelectorAll("[data-contact]").forEach(link => link.href = CONTACT_URL);
 
-<section id="sim" style="padding-top:20px"><div class="wrap">
-  <span class="sec-en">CASE</span>
-  <h2>例えば、<em>こんな使われ方</em>。</h2>
-  <p class="sec-lede">業種ごとに運用の型をゼロから設計しています。イメージしやすいよう、架空の例でご紹介します。</p>
-  <div class="icards">
-    <div class="icard"><div class="en">飲食・接客業</div><div class="ja">歌舞伎町のシーシャバー(フォロワー350人)の場合</div>
-      <p class="trouble">「最終投稿が2ヶ月前。『今日やってるか分からない店』として、深夜の検索客に素通りされていた」</p>
-      <p>→ 毎日の「本日営業中」ストーリーズと週2本の店内投稿で、"今夜やってる店"に。マスターの作業はLINEに写真を送るだけ、週10分。</p></div>
-    <div class="icard"><div class="en">芸能事務所</div><div class="ja">結成1年のアイドルグループの場合</div>
-      <p class="trouble">「公式アカウントが告知の掲示板になっていて、フォロワーが増えない。個人アカはルールがなく統制できない」</p>
-      <p>→ 切り抜きリール+日常投稿に再設計し、個人アカにはガイドラインとテンプレを整備。イベント2週間前から逆算した告知で現場に呼ぶ。</p></div>
-    <div class="icard"><div class="en">不動産業</div><div class="ja">駅前の不動産会社の場合</div>
-      <p class="trouble">「ポータルの掲載費が上がり続けるのに、反響は減っている。自社の集客導線がない」</p>
-      <p>→ 内見のついでにスタッフがスマホで10秒×4カット。それをルームツアーリールに編集し、LINE登録の自社反響導線を作る。募集状況は毎週照合して安全に。</p></div>
-    <div class="icard"><div class="en">会計事務所</div><div class="ja">経理代行会社の代表の場合</div>
-      <p class="trouble">「集客が紹介頼み。発信した方がいいのは分かっているが、書く時間がない」</p>
-      <p>→ 月1回60分のオンライン取材だけで、X週5本+note月2本を代行執筆。「月次が遅い」で悩む経営者に見つかる発信へ。代表の実働は月90分。</p></div>
-  </div>
-  <p style="text-align:center;color:#6B7694;font-size:11.5px;margin-top:18px">※上記は実在の事例ではなく、ご提供内容をイメージいただくための架空の例です。</p>
-  <div style="text-align:center;margin-top:26px">
-    <a class="btn btn-gold" data-contact href="#">お見積もりはこちら</a>
-    <p style="color:var(--muted);font-size:12.5px;margin-top:12px">ご希望の構成をうかがい、その場でお見積書をお出しします。</p>
-  </div>
-</div></section>
+    const topbar = document.getElementById("topbar");
+    const hero = document.getElementById("top");
+    const updateHeader = () => {
+      const revealAt = hero ? Math.max(180, hero.offsetHeight - 96) : 180;
+      topbar.classList.toggle("is-scrolled", window.innerWidth > 1020 && window.scrollY > revealAt);
+    };
+    updateHeader();
+    window.addEventListener("scroll", updateHeader, { passive:true });
+    window.addEventListener("resize", updateHeader, { passive:true });
 
-<section><div class="wrap">
-  <span class="sec-en">PRICE</span>
-  <h2>月額<em>39,800円</em>から。</h2>
-  <p class="sec-lede">4つのプランに、月額オプション約30種・単発オプション約40種(プロカメラマン撮影を含む)を自由に組み合わせられます。下記はバー業態の例。業種別の詳細は、無料診断とあわせて個別にお見積りします。</p>
-  <div class="pcards">
-    <div class="pcard"><div class="pn">BASE</div><div class="pp">¥39,800<span>/月</span></div><p>まず発信を止めないための最小構成。単品トッピング自由</p></div>
-    <div class="pcard"><div class="pn">ENTRY</div><div class="pp">¥59,800<span>/月</span></div><p>運用負荷を限定した導入プラン</p></div>
-    <div class="pcard reco"><div class="pn">STANDARD</div><div class="pp">¥98,000<span>/月</span></div><p>投稿・ストーリーズ・リール・分析レポートまでのフル運用</p></div>
-    <div class="pcard"><div class="pn">PREMIUM</div><div class="pp">¥158,000<span>/月</span></div><p>改善ミーティング・採用告知まで全部入り</p></div>
-  </div>
-  <p class="plan-note">別途初期費用(初月のみ)。表示価格はすべて税別です。契約は1ヶ月ごとの自動更新で、縛りはありません。</p>
-</div></section>
-
-<section class="band"><div class="wrap">
-  <span class="sec-en">OPTIONS</span>
-  <h2>「これもできる?」に、<em>ほぼ全部</em>応えます。</h2>
-  <div class="nums">
-    <div class="n"><b>30<span style="font-size:15px">種+</span></b><span>月額オプション</span></div>
-    <div class="n"><b>40<span style="font-size:15px">種+</span></b><span>単発オプション</span></div>
-    <div class="n"><b>7<span style="font-size:15px">種</span></b><span>プロカメラマン撮影</span></div>
-  </div>
-  <p>TikTok・YouTube Shorts展開、多言語対応、LINE・CRM構築、Googleマップ整備、採用支援、イベント実況、プロ撮影(宣材・物件・深夜の店内まで)——。使う・使わないは自由。必要な分だけ積み上げる料金体系です。</p>
-</div></section>
-
-<section><div class="wrap">
-  <span class="sec-en">PROMISE</span>
-  <h2>約束すること、<em>しないこと</em>。</h2>
-  <p class="sec-lede">SNS運用の営業トークには、守れない約束があふれています。私たちは最初に線を引きます。</p>
-  <div class="honest">
-    <div class="hbox ok"><h3>私たちが約束すること</h3><ul>
-      <li>発信が止まらないこと。素材が少ない月も運用を継続します</li>
-      <li>全投稿を公開前に貴社確認へ。掲載事故を仕組みで防ぎます</li>
-      <li>数字を毎月見て、翌月の改善案とセットで報告すること</li>
-      <li>下がった数字も隠さず、理由の仮説と対策を添えて共有すること</li>
-    </ul></div>
-    <div class="hbox ng"><h3>あえて約束しないこと</h3><ul>
-      <li>フォロワー数・来店数・成約数・応募数の保証(保証を謳う業者にご注意ください)</li>
-      <li>深夜・即時の対応</li>
-      <li>DM・コメントの全件返信代行(定型・上限つきオプションのみ)</li>
-    </ul></div>
-  </div>
-</div></section>
-
-<section style="padding-bottom:30px"><div class="wrap">
-  <span class="sec-en">FLOW</span>
-  <h2>ご契約まで、<em>むずかしいことは何も</em>。</h2>
-  <div class="flow" style="margin-top:34px">
-    <div class="step"><div class="no"></div><div><h3>無料SNS診断</h3><p>現状のアカウントを拝見し、お客様がどこで離脱しているかをA4 1枚で。48時間以内にお届けします。</p></div></div>
-    <div class="step"><div class="no"></div><div><h3>ヒアリングと初期設計(約15分)</h3><p>お店・会社の強み、NG事項、投稿のトーンを確認。プロフィール・導線を整えます。</p></div></div>
-    <div class="step"><div class="no"></div><div><h3>LINEに素材を送るだけ</h3><p>週2〜3枚、スマホ写真でOK。何を撮るかはこちらから指示が届きます。ブレていても大丈夫。</p></div></div>
-    <div class="step"><div class="no"></div><div><h3>確認して、公開</h3><p>すべての投稿は公開前に貴社チェックを経由。OKをもらったものだけが世に出ます。</p></div></div>
-    <div class="step"><div class="no"></div><div><h3>毎月、数字と次の一手</h3><p>月次レポートで反応を共有し、翌月の計画を更新。発信は止まらず、少しずつ強くなります。</p></div></div>
-  </div>
-</div></section>
-
-<section style="padding:64px 0 56px"><div class="wrap">
-  <img src="vision.jpg" alt="EXRISEの思想×FOLLOWERS ― フォロワーの先に、事業の上昇を。人を集める・価値を魅せる・ブランドを育てる・発信を止めない・事業を伸ばす。LINEに素材を送るだけで、SNSを戦略的な資産に変える。" style="width:100%;height:auto;display:block;border:1px solid var(--line)">
-  <p style="text-align:center;color:#6B7694;font-size:11px;margin-top:10px">※画面・数値はサービスイメージです。</p>
-</div></section>
-
-<section class="cta" id="contact"><div class="wrap"><div class="box">
-  <span class="sec-en">CONTACT</span>
-  <h2>まずは、<em>無料診断</em>から。</h2>
-  <p>売り込みは診断を見ていただいてからで結構です。「今、何が機会損失になっているか」を1枚にしてお渡しします。</p>
-  <div class="cta-row" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
-    <a class="btn btn-gold" data-contact href="#">無料SNS診断を申し込む</a>
-    <a class="btn btn-line" data-contact href="#">お見積もりを依頼する</a>
-  </div>
-</div></div></section>
-
-<footer><div class="wrap">
-  <div class="fb">EXRISE PROJECT</div>
-  <p>EXRISE FOLLOWERS ― SNS運用代行/表示価格はすべて税別です。成果(フォロワー数・来店数・成約数等)を保証するものではありません。</p>
-</div></footer>
-
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold:.12 });
+    document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
+  </script>
 </body>
 </html>
